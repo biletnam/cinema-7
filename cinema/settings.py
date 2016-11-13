@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cinema.catalog',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'cinema',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': '1221',
         'HOST': 'localhost',
         'PORT': '5432'
     }

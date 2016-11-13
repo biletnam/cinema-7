@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class CinemaappConfig(AppConfig):
-    name = 'catalog'
+    name = 'cinema.catalog'

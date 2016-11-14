@@ -1,0 +1,46 @@
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: center;
+}
+
+.flex-item {
+  background: white;
+  padding: 10px;
+  max-width: 170px;
+  margin-top: 10px;
+  line-height: 10px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.poster {
+    border-radius: 2px;
+    width: 150px;
+    height: 226px;
+    padding: 0em 0em 1em 0em;
+    text-align: center;
+    opacity: 1;
+}
+
+.poster:hover {
+    opacity: 0.8;
+}
+
+.title {
+    color: #222;
+    text-align: center;
+    line-height: 15px;
+}
+
+.profile {
+    display: block;
+    float: right;
+}

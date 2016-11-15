@@ -4,25 +4,24 @@
 from django.db import models
 
 
-class Movies(models.Model):
-    movie_id = models.BigIntegerField
-    title = models.CharField(max_length=20, null=True)
-    original_title = models.CharField(max_length=20, null=True)
-    year = models.IntegerField(null=True)
-    director = models.CharField(max_length=140, null=True)
-    cast = models.SmallIntegerField(null=True)
-    poster_url = models.CharField(max_length=50, null=True)
-    trailer_url = models.CharField(max_length=50, null=True)
-    summary = models.CharField(max_length=140, null=True)
-    format = models.SmallIntegerField(null=True)
-
-
-class MovieGenre(models.Model):
-    mg_id = models.ForeignKey(Movies, on_delete=models.CASCADE)
-    movie = models.BigIntegerField(null=True)
-    genre = models.BigIntegerField(null=True)
-
-
-class Genres(models.Model):
-    genre_id = models.ForeignKey(MovieGenre, on_delete=models.CASCADE)
+class Genre(models.Model):
     description = models.CharField(max_length=140, null=True)
+
+    def __str__(self):
+        return self.description
+
+
+class Movie(models.Model):
+    title = models.CharField(max_length=50, null=True)
+    original_title = models.CharField(max_length=50, null=True, blank=True)
+    release_date = models.DateField(null=True)
+    director = models.CharField(max_length=140, null=True)
+    cast = models.CharField(max_length=500, null=True)
+    poster_url = models.CharField(max_length=100, null=True)
+    trailer_url = models.CharField(max_length=100, null=True)
+    summary = models.CharField(max_length=1000, null=True)
+    genres = models.ManyToManyField(Genre)
+    _3D = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

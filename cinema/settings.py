@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'cinema.catalog',
+    'cinema.movie_info'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

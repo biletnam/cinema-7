@@ -1,4 +1,4 @@
-/__pycache__/
+/cinema/__pycache__/
 /.idea/
 /db.sqlite3
 /cinema/catalog/migrations/

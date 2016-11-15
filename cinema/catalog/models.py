@@ -10,6 +10,7 @@ class Genre(models.Model):
     def __str__(self):
         return self.description
 
+
 class Movie(models.Model):
     title = models.CharField(max_length=50, null=True)
     original_title = models.CharField(max_length=50, null=True, blank=True)

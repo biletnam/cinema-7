@@ -5,5 +5,5 @@
 /db.sqlite3
 /cinema/catalog/migrations/
 /cinema/movie_info/migrations/
-/cinema/movie_info/migrations/
+/cinema/movie_info/__pycache__/
 /cinema/movie_info/__init__.py

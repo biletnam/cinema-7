@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>All films</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'catalog/style.css' %}" />
 </head>
 
@@ -37,7 +37,7 @@
             {% for movie in movie_list %}
                 <div class="flex-item">
                     <a href="/movie/{{ movie.id }}/">
-                        <img class="poster" src="{{ movie.poster_url }}"/><br>
+                        <img class="poster" src="{{ movie.poster.url }}"/><br>
                         <p class="title">{{ movie.title }}</p>
                     </a>
                 </div>

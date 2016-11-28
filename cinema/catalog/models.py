@@ -28,7 +28,7 @@ class Movie(models.Model):
     release_date = models.DateField(null=True)
     director = models.CharField(max_length=140, null=True)
     cast = models.CharField(max_length=500, null=True)
-    poster = models.ImageField(upload_to=get_image_path, blank=True, verbose_name=title)
+    poster = models.ImageField(upload_to=get_image_path)
     trailer_url = models.CharField(max_length=100, null=True)
     summary = models.CharField(max_length=1000, null=True)
     genres = models.ManyToManyField(Genre)
@@ -47,6 +47,7 @@ class Image(models.Model):
 @receiver(post_delete, sender=Image)
 def image_delete(sender, instance, **kwargs):
     instance.image.delete(False)
+
 
 @receiver(post_delete, sender=Movie)
 def poster_delete(sender, instance, **kwargs):

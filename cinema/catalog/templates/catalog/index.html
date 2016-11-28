@@ -37,7 +37,7 @@
             {% for movie in movie_list %}
                 <div class="flex-item">
                     <a href="/movie/{{ movie.id }}/">
-                        <img class="poster" src="{{ movie.poster_url }}"/><br>
+                        <img class="poster" src="{{ movie.poster.url }}"/><br>
                         <p class="title">{{ movie.title }}</p>
                     </a>
                 </div>

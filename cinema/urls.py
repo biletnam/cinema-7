@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+handler404 = 'cinema.views.call404'
+
 urlpatterns = [
     url(r'^', include('cinema.catalog.urls')),
     url(r'^movie/', include('cinema.movie_info.urls')),

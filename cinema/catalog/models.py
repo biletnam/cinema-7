@@ -16,8 +16,7 @@ class Genre(models.Model):
 
 
 class Movie(models.Model):
-
-    def get_image_path(instance, filename):
+    def get_image_path(filename):
         ext = filename.split('.')[-1]
         random_name = get_random_string(length=16)
         filename = "%s.%s" % (random_name, ext)
@@ -39,9 +38,8 @@ class Movie(models.Model):
 
 
 class Image(models.Model):
-
     movie = models.ForeignKey(Movie)
-    image = models.ImageField(upload_to=Movie.get_image_path, blank=True, verbose_name="image")
+    image = models.ImageField(blank=True, verbose_name="image")
 
 
 @receiver(post_delete, sender=Image)

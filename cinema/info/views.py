@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Cinema
 
 def info(request):
-    ret_string = 'Test response'
-    return HttpResponse(ret_string)
+    cinema_info = Cinema.objects.first()
+    context = {'cinema_info': cinema_info}
+    return render(request, 'info/index.html', context)

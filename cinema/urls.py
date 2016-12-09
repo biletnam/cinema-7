@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^', include('cinema.catalog.urls')),
     url(r'^movie/', include('cinema.movie_info.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^cinema/', include('cinema.info.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

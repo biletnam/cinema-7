@@ -1,12 +1,10 @@
 from django.contrib import admin
 
-from .models import Movie
-from .models import Genre
-from .models import Image
+from .models import Cinema
 
 
 class InlineImage(admin.TabularInline):
-    model = Image
+    model = Cinema
 
 
 class MovieAdmin(admin.ModelAdmin):
@@ -14,5 +12,4 @@ class MovieAdmin(admin.ModelAdmin):
 
 # Register your models here.
 
-admin.site.register(Movie, MovieAdmin)
-admin.site.register(Genre)
+admin.site.register(Cinema)

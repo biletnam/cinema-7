@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^movie/', include('cinema.movie_info.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^cinema/', include('cinema.info.urls')),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

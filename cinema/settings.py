@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'cinema.catalog',
     'cinema.movie_info',
     'cinema.info',
+    'star_ratings',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,10 +81,10 @@ WSGI_APPLICATION = 'cinema.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cinema',
-        'USER': 'postgres',
-        'PASSWORD': '1221',
-        'HOST': 'localhost',
+        'NAME': 'uafrtstb',
+        'USER': 'uafrtstb',
+        'PASSWORD': 'LAGpSU2SZWVdXJCfGAlwxufuVo7vjKnL',
+        'HOST': 'horton.elephantsql.com',
         'PORT': '5432'
     }
 }
@@ -111,7 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
+DATE_FORMAT = 'd E Y'
 
 #TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Moscow'
@@ -138,3 +140,5 @@ STATICFILES_FINDERS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STAR_RATINGS_RERATE = False

@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+handler404 = 'cinema.views.call404'
 
 # Application definition
 

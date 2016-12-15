@@ -65,6 +65,7 @@ class Movie(models.Model):
     _3D = models.BooleanField(default=False)
     kinopoisk_id = models.IntegerField(editable=False, null=True)
     rating = GenericRelation(Rating, related_query_name='rating')
+    duration = models.IntegerField(null=True)
 
 
     def __str__(self):
@@ -73,6 +74,8 @@ class Movie(models.Model):
     def save(self, *args, **kwargs):
         if self.kinopoisk_id is None:
             self.kinopoisk_id = self.get_kinopoisk_id()
+            super(Movie, self).save(*args, **kwargs)
+        else:
             super(Movie, self).save(*args, **kwargs)
 
 

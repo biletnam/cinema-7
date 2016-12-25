@@ -12,7 +12,7 @@ class Hall(models.Model):
 class Seance(models.Model):
     time = models.DateTimeField(null=False)
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
-    film = models.OneToOneField(Movie)
+    film = models.ForeignKey(Movie)
 
     def __str__(self):
         return self.film.title + " " + self.hall.name

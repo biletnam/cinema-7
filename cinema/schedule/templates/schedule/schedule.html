@@ -36,38 +36,50 @@
     </nav>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
-                <img src={{ cur_movie.poster.url }} alt="" width="80%" class="poster">
-{#                <p>{{ cur_movie.summary }}</p>#}
-            </div>
-            <div class="col-md-6">
-                <h1>{{ cur_movie.title }}</h1>
-                <p>Год: {{ cur_movie.release_date }}</p>
-                <p>Страна: USA</p>
-                <p>Режисер: {{ cur_movie.director }}</p>
-                <p>Актеры: {{ cur_movie.cast }}</p>
-                <p>Описание: {{ cur_movie.summary }}</p>
-                <h2>Трейлер</h2>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{cur_movie.trailer_url}}" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="col-md-2">
-                <h2>Рейтинг</h2>
-                {% ratings cur_movie %}
-                <h2>Кинопоиск</h2>
-                <a href="https://www.kinopoisk.ru/film/{{cur_movie.kinopoisk_id}}">
-                    <img src="https://rating.kinopoisk.ru/{{cur_movie.kinopoisk_id}}.gif">
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <h2>Расписание</h2>
+                <ul class="nav nav-pills">
+                {% for dateKey, seancesDictValue in seanses.items %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule/{{ dateKey }}" id="{{ dateKey }}">{{ dateKey }}</a>
+                     </li>
+                {% endfor %}
+                </ul>
+                <hr>
+                <table class="">
+                    <tbody>
+                    {% for dateKey, seancesDictValue in seanses.items %}
+                        {% if dateKey == today %}
+                            {% for titleKey, hallPlusTimeListValue in seancesDictValue.items %}
+                                <tr>
+                                    <th>
+                                        <span>
+                                            <a href="../movie/{{ titleKey.id }}">{{ titleKey }}</a>
+                                        </span>
+                                    </th>
+                                    <td>
+                                        {% for HallPlusTimeObj in hallPlusTimeListValue %}
+                                            {% for HallPlusTimeObj in hallPlusTimeListValue %}
+                                                 {%  for objHallKey, timeValue in HallPlusTimeObj.items %}
+                                                    {{ objHallKey }}
+                                                        <a rel="#">{{ timeValue }}</a>
+                                                 {% endfor %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+    <script>
+        today_nav = document.getElementById("{{ today }}");
+        today_nav.setAttribute("class","nav-link active");
+    </script>
     <script src='{% static 'js/jquery.min.js' %}', integrity='sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7', crossorigin='anonymous'></script>
     <script src='{% static 'js/tether.min.js.css' %}', integrity='sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8', crossorigin='anonymous'></script>
     <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK', crossorigin='anonymous'></script>

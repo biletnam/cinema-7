@@ -12,3 +12,4 @@
 /cinema/info/__init__.py
 /cinema/info/static/__init__.py
 /cinema/info/static/info/__init__.py
+/cinema/schedule/__pycache__/

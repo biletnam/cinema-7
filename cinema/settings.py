@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'cinema.catalog',
     'cinema.movie_info',
     'cinema.info',
+    'cinema.schedule',
     'star_ratings',
     'django.contrib.admin',
     'django.contrib.auth',

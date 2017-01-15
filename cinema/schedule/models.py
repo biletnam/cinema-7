@@ -14,7 +14,7 @@ class Seance(models.Model):
     start_time = models.DateTimeField(null=False)
     end_time = models.DateTimeField(null=False, editable=False)
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
-    movie = models.OneToOneField(Movie)
+    movie = models.ForeignKey(Movie)
 
     def __str__(self):
         return self.movie.title + " " + self.hall.name

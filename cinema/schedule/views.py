@@ -4,28 +4,29 @@ from ..schedule.models import Seance, Hall
 from ..catalog.models import Movie
 
 
-def get_time(film):
-    time = str(film['time'])
+def get_time(movie):
+    time = str(movie['time'])
     time = time[:19]
     time = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
     return time
 
 
 def show_schedule(request, day=0, month=0):
-    all_seances = Seance.objects.order_by('-time')
+    all_seances = Seance.objects.order_by('-start_time')
     date = set()  # set of date
     format_seances = {}  # result dict
-    for film in all_seances.values():  # forming set of date
-        date.add(get_time(film).strftime('%d-%m'))
+    print("TEEST " + all_seances.values())
+    for movie in all_seances.values():  # forming set of date
+        date.add(get_time(movie).strftime('%d-%m'))
     for val in date:  # finding seances for every date
         day_seanses = {}  # all seances for that date
         hall = {}
-        for film in all_seances.values():  # iterate all films
-            if get_time(film).strftime('%d-%m') == val:
+        for movie in all_seances.values():  # iterate all films
+            if get_time(movie).strftime('%d-%m') == val:
                 cur_seanses = []
-                cur_hall = Hall.objects.get(id=film['hall_id'])
-                cur_movie = Movie.objects.get(id=film['film_id'])
-                hall[cur_hall] = get_time(film).strftime('%H:%M')
+                cur_hall = Hall.objects.get(id=movie['hall_id'])
+                cur_movie = Movie.objects.get(id=movie['film_id'])
+                hall[cur_hall] = get_time(movie).strftime('%H:%M')
                 if cur_movie in day_seanses.keys():  # if film already exist in day_seances
                     for value in day_seanses[cur_movie]:  # copy exist hall+time
                         cur_seanses.append(value)

@@ -46,6 +46,28 @@
                 {% endfor %}
                 </ul>
                 <hr>
+                {% if not seancesExists %}
+                    <p>Seances is empty</p>
+                {% else %}
+                     <table class="">
+                        <tbody>
+                            {% for movieKey, seanceTimeList in seancesDict.items %}}
+                                <tr>
+                                    <th>
+                                        <span>
+                                            <a href="../../movie/{{movieKey.id}}"> {{movieKey.title}} </a>
+                                        </span>
+                                    </th>
+                                    <td>
+                                        {% for time in seanceTimeList %}
+                                            <a rel="#">{{ time }}</a>}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
 {#                <table class="">#}
 {#                    <tbody>#}
 {#                    {% for dateKey, seancesDictValue in seanses.items %}#}
@@ -76,10 +98,10 @@
             </div>
         </div>
     </div>
-    <script>
-        today_nav = document.getElementById("{{ today }}");
-        today_nav.setAttribute("class","nav-link active");
-    </script>
+{#    <script>#}
+{#        today_nav = document.getElementById("{{ today }}");#}
+{#        today_nav.setAttribute("class","nav-link active");#}
+{#    </script>#}
     <script src='{% static 'js/jquery.min.js' %}', integrity='sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7', crossorigin='anonymous'></script>
     <script src='{% static 'js/tether.min.js.css' %}', integrity='sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8', crossorigin='anonymous'></script>
     <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK', crossorigin='anonymous'></script>

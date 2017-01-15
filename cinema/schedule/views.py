@@ -1,10 +1,26 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render
 from ..schedule.models import Seance, Hall
 from ..catalog.models import Movie
 
+def generateDateList():
+    futureDaysNumber = 4
+    dateList = []
+
+    for dayNumber in range(0,futureDaysNumber):
+        date = datetime.today() + timedelta(dayNumber)
+        date = date.strftime('%d-%m')
+        dateList.append(date)
+
+    return dateList
+
+
 def show_schedule(request, day=0, month=0):
-    context = {'seanses': 'text', 'today': 'text'}
+    dateList = generateDateList()
+    # todayTime = datetime.today()
+    # todayTime = todayTime.strftime('%d-%m')
+
+    context = {'seanses': 'text', 'today': 'text', 'dateList' : dateList}
     return render(request, 'schedule/schedule.html', context)
 
 # def get_time(movie):

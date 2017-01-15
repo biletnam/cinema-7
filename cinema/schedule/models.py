@@ -1,5 +1,6 @@
 from django.db import models
 from cinema.catalog.models import Movie
+import datetime
 
 
 class Hall(models.Model):
@@ -10,9 +11,14 @@ class Hall(models.Model):
 
 
 class Seance(models.Model):
-    time = models.DateTimeField(null=False)
+    start_time = models.DateTimeField(null=False)
+    end_time = models.DateTimeField(null=False, editable=False)
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
-    film = models.ForeignKey(Movie)
+    movie = models.OneToOneField(Movie)
 
     def __str__(self):
-        return self.film.title + " " + self.hall.name
+        return self.movie.title + " " + self.hall.name
+
+    def save(self, *args, **kwargs):
+        self.end_time = self.start_time + datetime.timedelta(minutes = self.movie.duration)
+        super(Seance, self).save(*args, **kwargs)

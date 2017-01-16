@@ -13,4 +13,7 @@
 /cinema/info/static/__init__.py
 /cinema/info/static/info/__init__.py
 /cinema/schedule/__pycache__/
-cinema/schedule/migrations/
+/cinema/schedule/migrations/
+/cinema/booking/migrations/
+/cinema/booking/__init__.py
+/cinema/booking/__pycache__/

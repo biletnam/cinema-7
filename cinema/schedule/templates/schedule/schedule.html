@@ -39,47 +39,69 @@
             <div class="col-md-12">
                 <h2>Расписание</h2>
                 <ul class="nav nav-pills">
-                {% for dateKey, seancesDictValue in seanses.items %}
+                {% for date in dateList %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/schedule/{{ dateKey }}" id="{{ dateKey }}">{{ dateKey }}</a>
+                        <a class="nav-link" href="/schedule/{{ date }}" id="{{ date }}">{{ date }}</a>
                      </li>
                 {% endfor %}
                 </ul>
                 <hr>
-                <table class="">
-                    <tbody>
-                    {% for dateKey, seancesDictValue in seanses.items %}
-                        {% if dateKey == today %}
-                            {% for titleKey, hallPlusTimeListValue in seancesDictValue.items %}
+                {% if not seancesExists %}
+                    <p>Seances is empty</p>
+                {% else %}
+                     <table class="">
+                        <tbody>
+                            {% for movieKey, seanceTimeList in seancesDict.items %}}
                                 <tr>
                                     <th>
                                         <span>
-                                            <a href="../movie/{{ titleKey.id }}">{{ titleKey }}</a>
+                                            <a href="../../movie/{{movieKey.id}}"> {{movieKey.title}} </a>
                                         </span>
                                     </th>
                                     <td>
-                                        {% for HallPlusTimeObj in hallPlusTimeListValue %}
-                                            {% for HallPlusTimeObj in hallPlusTimeListValue %}
-                                                 {%  for objHallKey, timeValue in HallPlusTimeObj.items %}
-                                                    {{ objHallKey }}
-                                                        <a rel="#">{{ timeValue }}</a>
-                                                 {% endfor %}
-                                            {% endfor %}
+                                        {% for time in seanceTimeList %}
+                                            <a rel="#">{{ time }}</a>}
                                         {% endfor %}
                                     </td>
                                 </tr>
                             {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                {% endif %}
+{#                <table class="">#}
+{#                    <tbody>#}
+{#                    {% for dateKey, seancesDictValue in seanses.items %}#}
+{#                        {% if dateKey == today %}#}
+{#                            {% for titleKey, hallPlusTimeListValue in seancesDictValue.items %}#}
+{#                                <tr>#}
+{#                                    <th>#}
+{#                                        <span>#}
+{#                                            <a href="../movie/{{ titleKey.id }}">{{ titleKey }}</a>#}
+{#                                        </span>#}
+{#                                    </th>#}
+{#                                    <td>#}
+{#                                        {% for HallPlusTimeObj in hallPlusTimeListValue %}#}
+{#                                            {% for HallPlusTimeObj in hallPlusTimeListValue %}#}
+{#                                                 {%  for objHallKey, timeValue in HallPlusTimeObj.items %}#}
+{#                                                    {{ objHallKey }}#}
+{#                                                        <a rel="#">{{ timeValue }}</a>#}
+{#                                                 {% endfor %}#}
+{#                                            {% endfor %}#}
+{#                                        {% endfor %}#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
             </div>
         </div>
     </div>
-    <script>
-        today_nav = document.getElementById("{{ today }}");
-        today_nav.setAttribute("class","nav-link active");
-    </script>
+{#    <script>#}
+{#        today_nav = document.getElementById("{{ today }}");#}
+{#        today_nav.setAttribute("class","nav-link active");#}
+{#    </script>#}
     <script src='{% static 'js/jquery.min.js' %}', integrity='sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7', crossorigin='anonymous'></script>
     <script src='{% static 'js/tether.min.js.css' %}', integrity='sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8', crossorigin='anonymous'></script>
     <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK', crossorigin='anonymous'></script>

@@ -1,51 +1,57 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render
 from ..schedule.models import Seance, Hall
 from ..catalog.models import Movie
 
+def generateDateList():
+    futureDaysNumber = 4
+    dateList = []
 
-def get_time(movie):
-    time = str(movie['time'])
-    time = time[:19]
-    time = datetime.strptime(time, '%Y-%m-%d %H:%M:%S')
-    return time
+    for dayNumber in range(0,futureDaysNumber):
+        date = datetime.today() + timedelta(dayNumber)
+        date = date.strftime('%d-%m')
+        dateList.append(date)
+
+    return dateList
+
+def createSeancesDict(seancesList):
+    movieTitleList = []
+    seancesDict = {}
+
+    for seance in seancesList:
+        movieTitle = seance.movie.title
+        movieTitleList.append(movieTitle)
+
+    movieTitleList = list(set(movieTitleList))
+
+    for movieTitle in movieTitleList:
+        seanceTimeList = []
+        for seance in seancesList:
+            if (seance.movie.title == movieTitle):
+                movie = seance.movie
+                seanceTimeList.append(seance.start_time.strftime('%H:%M'))
+
+        seancesDict.update({movie:seanceTimeList})
+
+    return seancesDict
 
 
 def show_schedule(request, day=0, month=0):
-    all_seances = Seance.objects.order_by('-start_time')
-    date = set()  # set of date
-    format_seances = {}  # result dict
-    print("TEEST " + all_seances.values())
-    for movie in all_seances.values():  # forming set of date
-        date.add(get_time(movie).strftime('%d-%m'))
-    for val in date:  # finding seances for every date
-        day_seanses = {}  # all seances for that date
-        hall = {}
-        for movie in all_seances.values():  # iterate all films
-            if get_time(movie).strftime('%d-%m') == val:
-                cur_seanses = []
-                cur_hall = Hall.objects.get(id=movie['hall_id'])
-                cur_movie = Movie.objects.get(id=movie['film_id'])
-                hall[cur_hall] = get_time(movie).strftime('%H:%M')
-                if cur_movie in day_seanses.keys():  # if film already exist in day_seances
-                    for value in day_seanses[cur_movie]:  # copy exist hall+time
-                        cur_seanses.append(value)
-                    for obj in cur_seanses:  # if current hall for that film exist in day_seances
-                        for hallname in obj:
-                            if cur_hall == hallname:
-                                print(hall[cur_hall])
-                                print(1)  # implement adding time here
-                            else:
-                                print(2)
-                cur_seanses.append(hall)
-                day_seanses[cur_movie] = cur_seanses
-                hall = {}
-        format_seances[val] = day_seanses
-        print(day_seanses)
-    if day == 0 and month == 0:  # schedule for today
-        now = datetime.now()
-        today = now.strftime("%d-%m")
-    else:  # schedule for future or past
-        today = day + '-' + month
-    context = {'seanses': format_seances, 'today': today}
+    dateList = generateDateList()
+    context = {'dateList' : dateList}
+
+    return render(request, 'schedule/schedule.html', context)
+
+def show_concrete_schedule(request, day=0, month=0):
+    dateList = generateDateList()
+    seancesDict = []
+
+    seancesExists = Seance.objects.filter(start_time__month=month, start_time__day=day).exists()
+
+    if (seancesExists):
+        seancesList = list(Seance.objects.filter(start_time__month=month, start_time__day=day))
+        seancesDict = createSeancesDict(seancesList)
+
+    context = {'dateList' : dateList, 'seancesExists' : seancesExists, 'seancesDict' : seancesDict}
+    
     return render(request, 'schedule/schedule.html', context)

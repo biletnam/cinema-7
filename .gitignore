@@ -3,17 +3,12 @@
 /cinema/catalog/__init__.py
 /.idea/
 /db.sqlite3
-/cinema/catalog/migrations/
-/cinema/movie_info/migrations/
 /cinema/movie_info/__pycache__/
 /cinema/movie_info/__init__.py
-/cinema/info/migrations/
 /cinema/info/__pycache__/
 /cinema/info/__init__.py
 /cinema/info/static/__init__.py
 /cinema/info/static/info/__init__.py
 /cinema/schedule/__pycache__/
-/cinema/schedule/migrations/
-/cinema/booking/migrations/
 /cinema/booking/__init__.py
 /cinema/booking/__pycache__/

@@ -29,8 +29,8 @@ def createSeancesDict(seancesList):
         for seance in seancesList:
             if (seance.movie.title == movieTitle):
                 movie = seance.movie
-                hall = seance.hall.id
-                seanceTimeList.append([seance.start_time.strftime('%H-%M'), hall])
+                seance_id = seance.id
+                seanceTimeList.append([seance.start_time.strftime('%H-%M'), seance_id])
 
         seancesDict.update({movie:seanceTimeList})
 

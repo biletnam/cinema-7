@@ -59,8 +59,8 @@
                                         </span>
                                     </th>
                                     <td>
-                                        {% for time in seanceTimeList %}
-                                            <a href="./9-00/1">{{ time }}</a>}
+                                        {% for time, hall in seanceTimeList %}
+                                            <a href="./{{time}}/{{hall}}">{{ time }}</a>}
                                         {% endfor %}
                                     </td>
                                 </tr>

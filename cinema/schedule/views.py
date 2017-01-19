@@ -3,16 +3,18 @@ from django.shortcuts import render
 from ..schedule.models import Seance, Hall
 from ..catalog.models import Movie
 
+
 def generateDateList():
     futureDaysNumber = 4
     dateList = []
 
-    for dayNumber in range(0,futureDaysNumber):
+    for dayNumber in range(0, futureDaysNumber):
         date = datetime.today() + timedelta(dayNumber)
         date = date.strftime('%d-%m')
         dateList.append(date)
 
     return dateList
+
 
 def createSeancesDict(seancesList):
     movieTitleList = []
@@ -27,32 +29,34 @@ def createSeancesDict(seancesList):
     for movieTitle in movieTitleList:
         seanceTimeList = []
         for seance in seancesList:
-            if (seance.movie.title == movieTitle):
+            if seance.movie.title == movieTitle:
                 movie = seance.movie
                 seance_id = seance.id
                 seanceTimeList.append([seance.start_time.strftime('%H-%M'), seance_id])
 
-        seancesDict.update({movie:seanceTimeList})
+        seancesDict.update({movie: seanceTimeList})
 
     return seancesDict
 
 
-def show_schedule(request, day=0, month=0):
-    dateList = generateDateList()
-    context = {'dateList' : dateList}
+def show_schedule(request):
+    now = datetime.now()
+    month = now.strftime("%m")
+    day = now.strftime("%d")
+    return show_concrete_schedule(request, day, month)
 
-    return render(request, 'schedule/schedule.html', context)
 
 def show_concrete_schedule(request, day=0, month=0):
+    today = str(day) + '-' + str(month)
     dateList = generateDateList()
     seancesDict = []
 
-    seancesExists = Seance.objects.filter(start_time__month=month, start_time__day=day).exists()
+    seancesExists = Seance.objects.filter(start_time__month=int(month), start_time__day=int(day)).exists()
 
-    if (seancesExists):
+    if seancesExists:
         seancesList = list(Seance.objects.filter(start_time__month=month, start_time__day=day))
         seancesDict = createSeancesDict(seancesList)
 
-    context = {'dateList' : dateList, 'seancesExists' : seancesExists, 'seancesDict' : seancesDict}
-    
+    context = {'dateList': dateList, 'seancesExists': seancesExists, 'seancesDict': seancesDict, 'today': today}
+
     return render(request, 'schedule/schedule.html', context)

@@ -1,27 +1,25 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from cinema.schedule.models import Seance, Row
-
-
-def createRowsList(rowList):
-    for row in rowList:
-        print(row)
-        # for seat in row.seat_count
-        # print(row)
-    return
+from cinema.schedule.models import Seance, Row, Seat
 
 def show(request,id=0):
+    result = {}
+
     seance =  Seance.objects.get(id=id)
     hall = seance.hall
-    row_count = hall.row_count
 
     rowList = Row.objects.filter(hall=hall)
-    print("RESULT " + str(rowList))
 
-    createRowsList(rowList)
+    for row in rowList:
+        seatList = []
+        for i in range(1, row.seat_count + 1):
+            seat = Seat.objects.filter(hall=hall, row=row, number=i, seance=seance)
+            seatList.append(seat.booked)
+        result.update({row.number: seatList})
 
-    context = {}
+
+    context = {'result': result}
     return render(request,'booking/booking.html', context)
 
 

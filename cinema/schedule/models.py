@@ -6,6 +6,7 @@ import datetime
 class Hall(models.Model):
     name = models.CharField(max_length=200)
     row_count = models.IntegerField(default=0)
+    seats_in_row = models.IntegerField(default=10)
 
     def __str__(self):
         return self.name
@@ -13,7 +14,7 @@ class Hall(models.Model):
     def create_rows(self):
         rows_list = []
         for i in range(1, self.row_count + 1):
-            row = Row(hall=self, number=i, seat_count=10)
+            row = Row(hall=self, number=i, seat_count=self.seats_in_row)
             rows_list.append(row)
         Row.objects.bulk_create(rows_list)
 

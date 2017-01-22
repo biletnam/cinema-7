@@ -20,7 +20,7 @@ def show(request,id=0):
 
 
     context = {'result': result}
-    return render(request,'booking/booking.html', context)
+    return render(request,'booking/index.html', context)
 
 
 # Руслан Валеев, [12.01.17 14:10]

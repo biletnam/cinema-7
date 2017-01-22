@@ -66,6 +66,6 @@ class Seat(models.Model):
     booked = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%s: %d-%d %b" % (self.hall.name, self.row.number, self.number)
+        return "%s: %d-%d" % (self.hall.name, self.row.number, self.number)
 
 

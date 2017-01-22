@@ -34,7 +34,6 @@
         </div>
     </nav>
     <div>
-        <p>{{ result }}</p>
         <table class="">
             <tbody>
             {% for rowKey, seatList in result.items %}
@@ -42,15 +41,11 @@
                     <th>
                         <span>
                             <p>{{ rowKey }}</p>
-{#                            <a href="../../movie/{{movieKey.id}}"> {{movieKey.title}} </a>#}
                         </span>
                     </th>
-                    <td>
-                        {% for seat in seanceTimeList %}
-                            <p>{{ seat.booked }}</p>
-{#                            <a href="../../booking/{{ seance }}" rel="#">{{ time }}</a>#}
+                        {% for seat in seatList %}
+                            <td>{{ seat }}</td>
                         {% endfor %}
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>

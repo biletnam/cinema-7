@@ -51,20 +51,12 @@ def create_booking(request):
             response_data["booking_id"] = booking.get_id()
 
             # next update data in Seats table
-            hall = seance.hall.id
+            hall = seance.hall
             #do this for each selected seat
             for seat in bookingList:
-                row = int(seat[0])
+                row = Row.objects.filter(hall=hall, number = int(seat[0]))
                 number = int(seat[2])
-                seat = Seat(Seat.objects.filter(hall=hall, row=row, number=number, seance=seance))
-                print(seat)
-
-            # for row in rowList:
-            #     seatList = []
-            #     for i in range(1, row.seat_count + 1):
-            #         seat = Seat(Seat.objects.filter(hall=hall, row=row, number=i, seance=seance))
-            #         seatList.append(seat.booked)
-                # result.update({row.number: seatList})
+                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))
     else:
         return (HttpResponse(status=404))

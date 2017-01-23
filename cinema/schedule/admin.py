@@ -1,4 +1,4 @@
-from cinema.schedule.models import Seance, Row, Hall
+from cinema.schedule.models import Seance, Row, Hall, Seat
 from django.contrib import admin
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
@@ -37,3 +37,4 @@ class SeanceAdmin(admin.ModelAdmin):
 admin.site.register(Seance,SeanceAdmin)
 admin.site.register(Row)
 admin.site.register(Hall)
+admin.site.register(Seat)

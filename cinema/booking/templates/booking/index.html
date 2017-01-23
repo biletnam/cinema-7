@@ -161,7 +161,7 @@ span.seatCharts-legendDescription {
       <div id="legend"></div>
     </div>
       <div>
-      <p>{{ seance }}</p>
+         <p id = "seance">{{ seance.id }}</p>
       </div>
   </div>
 </div>
@@ -306,8 +306,11 @@ var firstSeatLabel = 1;
 				sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
 
                 $('#checkout').on('click', function () {
+
+                    seance_value = $("#seance").html();
                     data = {
-                        selected: (sc.find('selected').seatIds)
+                        selected: (sc.find('selected').seatIds),
+                        seance: seance_value
                     };
 {#                    console.log(data)#}
 {#                    Uncomment to see data structure in browser console#}

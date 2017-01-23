@@ -32,6 +32,8 @@ def show_booking_info(request,id=0):
     context = {'booking': booking}
     return render(request, 'booking/booking_info.html', context)
 
+def createBooking(request):
+    print("======================================")
 
 # Руслан Валеев, [12.01.17 14:10]
 # {ряд: {место: true, место: false, ...}, ряд: {}, ...}

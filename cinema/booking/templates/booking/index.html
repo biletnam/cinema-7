@@ -323,7 +323,7 @@
                 price: $("#total").html()
             };
 
-            console.log(dataJson);
+{#            console.log(dataJson);#}
             {#                    Uncomment to see data structure in browser console#}
             $.ajax({
                 type: "POST",
@@ -331,8 +331,9 @@
                 data: JSON.stringify(dataJson),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'text',
-                success: function (data) {
-                    window.location.replace("../../1");
+                success: function (response) {
+                    res = JSON.parse(response);
+                    window.location.replace("../../"+res.booking_id);
                 }
             });
         })

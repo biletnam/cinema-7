@@ -165,47 +165,6 @@ span.seatCharts-legendDescription {
       </div>
   </div>
 </div>
-{#    <div>#}
-{#        <div class="legends">#}
-{#            <input id="legAvailable" type="checkbox" disabled />#}
-{#            <label for="legAvailable"> Available</label>#}
-{#            <input id="legAvailable" type="checkbox" data-status="notavailable" disabled />#}
-{#            <label for="legAvailable"> Not Available</label>#}
-{#            <input id="legBooked" type="checkbox" data-status="booked" checked disabled />#}
-{#            <label for="legBooked"> Booked</label>#}
-{#            <input id="legBooked" type="checkbox" checked disabled />#}
-{#            <label for="legBooked"> Selected</label>#}
-{#        </div>#}
-{##}
-{##}
-{#    </div>#}
-{##}
-{#    <div id="seats">#}
-{#    </div>#}
-
-{#    <script src='{% static 'js/jquery-2.1.4.min.js' %}'></script>#}
-{#    <script src='{% static 'js/flexiseats.js' %}'></script>#}
-{##}
-{##}
-{#    <script type="text/javascript">#}
-{#        var seats = $('#seats').flexiSeats({#}
-{#            rows: 10,#}
-{#            columns: 20,#}
-{#            multiple: false,#}
-{#            notavailable: ['1-2', '4-3'],#}
-{#             booked: ['2-3']#}
-{#            });#}
-{##}
-{#        var seats = $('#seats').flexiSeats(#}
-{#        // options here#}
-{#        );#}
-{##}
-{#        seats.getAvailable();#}
-{#        seats.getNotAvailable();#}
-{#        seats.getBooked();#}
-{#        seats.getSelected();#}
-{#    </script>#}
-
 
     <script src='{% static 'js/jquery.min.js' %}'></script>
     <script src='{% static 'js/jquery-2.1.4.min.js' %}'></script>
@@ -213,113 +172,140 @@ span.seatCharts-legendDescription {
 {#    <script src='{% static 'js/jquery.min.js' %}', integrity='', crossorigin='anonymous'></script>#}
 
      <script>
-var firstSeatLabel = 1;
+        function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+         var firstSeatLabel = 1;
 
-			$(document).ready(function() {
-				var $cart = $('#selected-seats'),
-					$counter = $('#counter'),
-					$total = $('#total'),
-					sc = $('#seat-map').seatCharts({
-					map: [
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'ee_ee',
-						'eeeee',
-					],
-					seats: {
-						f: {
-							price   : 100,
-							classes : 'first-class', //your custom CSS class
-							category: 'First Class'
-						},
-						e: {
-							price   : 40,
-							classes : 'economy-class', //your custom CSS class
-							category: 'Economy Class'
-						}
+        $(document).ready(function() {
+            var $cart = $('#selected-seats'),
+                $counter = $('#counter'),
+                $total = $('#total'),
+                sc = $('#seat-map').seatCharts({
+                map: [
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'ee_ee',
+                    'eeeee',
+                ],
+                seats: {
+                    f: {
+                        price   : 100,
+                        classes : 'first-class', //your custom CSS class
+                        category: 'First Class'
+                    },
+                    e: {
+                        price   : 40,
+                        classes : 'economy-class', //your custom CSS class
+                        category: 'Economy Class'
+                    }
 
-					},
-					naming : {
-						top : false,
-						getLabel : function (character, row, column) {
-							return firstSeatLabel++;
-						},
-					},
-					legend : {
-						node : $('#legend'),
-					    items : [
-							[ 'f', 'available',   'First Class' ],
-							[ 'e', 'available',   'Economy Class'],
-							[ 'f', 'unavailable', 'Already Booked']
-					    ]
-					},
-					click: function () {
-						if (this.status() == 'available') {
-							//let's create a new <li> which we'll add to the cart items
-							$('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
-								.attr('id', 'cart-item-'+this.settings.id)
-								.data('seatId', this.settings.id)
-								.appendTo($cart);
+                },
+                naming : {
+                    top : false,
+                    getLabel : function (character, row, column) {
+                        return firstSeatLabel++;
+                    },
+                },
+                legend : {
+                    node : $('#legend'),
+                    items : [
+                        [ 'f', 'available',   'First Class' ],
+                        [ 'e', 'available',   'Economy Class'],
+                        [ 'f', 'unavailable', 'Already Booked']
+                    ]
+                },
+                click: function () {
+                    if (this.status() == 'available') {
+                        //let's create a new <li> which we'll add to the cart items
+                        $('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                            .attr('id', 'cart-item-'+this.settings.id)
+                            .data('seatId', this.settings.id)
+                            .appendTo($cart);
 
-							/*
-							 * Lets update the counter and total
-							 *
-							 * .find function will not find the current seat, because it will change its stauts only after return
-							 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-							 */
-							$counter.text(sc.find('selected').length+1);
-							$total.text(recalculateTotal(sc)+this.data().price);
+                        /*
+                         * Lets update the counter and total
+                         *
+                         * .find function will not find the current seat, because it will change its stauts only after return
+                         * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                         */
+                        $counter.text(sc.find('selected').length+1);
+                        $total.text(recalculateTotal(sc)+this.data().price);
 
-							return 'selected';
-						} else if (this.status() == 'selected') {
-							//update the counter
-							$counter.text(sc.find('selected').length-1);
-							//and total
-							$total.text(recalculateTotal(sc)-this.data().price);
+                        return 'selected';
+                    } else if (this.status() == 'selected') {
+                        //update the counter
+                        $counter.text(sc.find('selected').length-1);
+                        //and total
+                        $total.text(recalculateTotal(sc)-this.data().price);
 
-							//remove the item from our cart
-							$('#cart-item-'+this.settings.id).remove();
+                        //remove the item from our cart
+                        $('#cart-item-'+this.settings.id).remove();
 
-							//seat has been vacated
-							return 'available';
-						} else if (this.status() == 'unavailable') {
-							//seat has been already booked
-							return 'unavailable';
-						} else {
-							return this.style();
-						}
-					}
-				});
+                        //seat has been vacated
+                        return 'available';
+                    } else if (this.status() == 'unavailable') {
+                        //seat has been already booked
+                        return 'unavailable';
+                    } else {
+                        return this.style();
+                    }
+                }
+            });
 
-				//this will handle "[cancel]" link clicks
-				$('#selected-seats').on('click', '.cancel-cart-item', function () {
-					//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-					sc.get($(this).parents('li:first').data('seatId')).click();
-				});
+            //this will handle "[cancel]" link clicks
+            $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                sc.get($(this).parents('li:first').data('seatId')).click();
+            });
 
-				//let's pretend some seats have already been booked
-				sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+            //let's pretend some seats have already been booked
+            sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
 
-                $('#checkout').on('click', function () {
+            $('#checkout').on('click', function () {
 
-                    seance_value = $("#seance").html();
-                    data = {
-                        selected: (sc.find('selected').seatIds),
-                        seance: seance_value
-                    };
-{#                    console.log(data)#}
-{#                    Uncomment to see data structure in browser console#}
-                    $.ajax({type: "POST", url: "../../proceed", data: data, dataType: 'json', success: function(data){
-                            window.location.replace("../../1");
-                        }
-                    });
-                })
-		});
+                seance_value = $("#seance").html();
+                data = {
+                    selected: (sc.find('selected').seatIds),
+                    seance: seance_value
+                };
+    {#                    console.log(data)#}
+    {#                    Uncomment to see data structure in browser console#}
+                $.ajax({type: "POST", url: "../../proceed/", data: data, dataType: 'json', success: function(data){
+                        window.location.replace("../../1");
+                    }
+                });
+            })
+    });
 
 		function recalculateTotal(sc) {
 			var total = 0;
@@ -331,23 +317,6 @@ var firstSeatLabel = 1;
 
 			return total;
 		}
-{#        $(document).ready(function(){#}
-{#            arr =[];#}
-{#            $("#checkout").click(function(){#}
-{#                console.log($.find('selected-seats'));#}
-{#                    $.find('selected-seats').each(function (){#}
-{#                        arr.push(this.data('SeatId'))#}
-{#                });#}
-{#                data = {#}
-{#                    selected: arr#}
-{#                };#}
-                {#                $.ajax({type: "POST", url: "/", data: data, dataType: 'json', success: function(data){#}
-{#                    window.location.replace("http://stackoverflow.com");#}
-{#                }});#}
-{#                console.log(data);#}
-{#                return false;#}
-{#            });#}
-{#        });#}
 		</script><script type="text/javascript">
 
   var _gaq = _gaq || [];

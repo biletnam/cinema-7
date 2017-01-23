@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from cinema.booking.models import Booking
@@ -29,5 +31,12 @@ def show_booking_info(request,id=0):
 
 
 def create_booking(request):
-    print("======================================")
-    return(HttpResponse(status=200))
+    if request.is_ajax():
+        if request.method == 'POST':
+            seance = Seance.objects.filter(id=request.POST.get("seance"))
+
+            #removeDebugCode
+            print(seance)
+            print(request.POST.get('selected'))
+
+            return (HttpResponse(status=200))

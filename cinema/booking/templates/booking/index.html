@@ -107,15 +107,16 @@
             cur_row = ''
             for (seat in seats[row]){
                 if (seats.hasOwnProperty(row)) {
-                    console.log("Row is " + row + ", value is " + seats[row][seat]);
                     cur_row += 'e';
                 }
-                if (seats[row][seat] == 'True') {
+                console.log(seats[row][seat]);
+                if (seats[row][seat] == true) {
                     unavailable_seats.push(row + "_" + (parseInt(seat) + 1));
                 }
             }
             hall_plan.push(cur_row);
         }
+        console.log(unavailable_seats);
 
         var $cart = $('#selected-seats'),
             $counter = $('#counter'),

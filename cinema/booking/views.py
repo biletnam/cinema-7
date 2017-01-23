@@ -40,16 +40,25 @@ def show_booking_info(request, id=0):
 def create_booking(request):
     if request.is_ajax():
         if request.method == 'POST':
-            jsonResponse = json.loads(request.body.decode(encoding='UTF-8'))
-
-            seance = Seance.objects.get(id=jsonResponse.get("seance"))
-            bookingList = jsonResponse.get("selected")
-            price = jsonResponse.get("price")
-
+            #collecting data to create booking
+            json_request = json.loads(request.body.decode(encoding='UTF-8'))
+            seance = Seance.objects.get(id=json_request.get("seance"))
+            bookingList = json_request.get("selected")
+            price = json_request.get("price")
+            #creating new Booking instance
             booking = Booking.objects.create(price=price, seance=seance, seats=bookingList)
+
+            #collecting response data - booking_id
             response_data = {}
             response_data["booking_id"] = booking.get_id()
 
+            # next update data in Seats table
+            hall = seance.hall
+            #do this for each selected seat
+            for seat in bookingList:
+                row = Row.objects.filter(hall=hall, number = int(seat[0]))
+                number = int(seat[2])
+                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))
     else:
         return (HttpResponse(status=404))

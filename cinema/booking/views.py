@@ -36,7 +36,8 @@ def create_booking(request):
             seance = Seance.objects.filter(id=request.POST.get("seance"))
 
             #removeDebugCode
-            print(seance)
-            print(request.POST.get('selected'))
+            # test = json.loads(request.POST.get("selected"))
+            print(request.POST.get("selected"))
+            # print(request.POST.get("selected"))
 
             return (HttpResponse(status=200))

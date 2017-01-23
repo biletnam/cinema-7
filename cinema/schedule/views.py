@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+
+from django.db import connection
 from django.shortcuts import render
 from ..schedule.models import Seance, Hall
 from ..catalog.models import Movie
@@ -31,7 +33,8 @@ def createSeancesDict(seancesList):
         for seance in seancesList:
             if seance.movie.title == movieTitle:
                 movie = seance.movie
-                seanceTimeList.append(seance.start_time.strftime('%H:%M'))
+                seance_id = seance.id
+                seanceTimeList.append([seance.start_time.strftime('%H-%M'), seance_id])
 
         seancesDict.update({movie: seanceTimeList})
 
@@ -42,6 +45,8 @@ def show_schedule(request):
     now = datetime.now()
     month = now.strftime("%m")
     day = now.strftime("%d")
+
+    connection.close()
     return show_concrete_schedule(request, day, month)
 
 
@@ -56,6 +61,7 @@ def show_concrete_schedule(request, day=0, month=0):
         seancesList = list(Seance.objects.filter(start_time__month=month, start_time__day=day))
         seancesDict = createSeancesDict(seancesList)
 
-    context = {'dateList': dateList, 'seancesExists': seancesExists, 'seancesDict': seancesDict, 'today': today}
 
+    context = {'dateList': dateList, 'seancesExists': seancesExists, 'seancesDict': seancesDict, 'today': today}
+    connection.close()
     return render(request, 'schedule/schedule.html', context)

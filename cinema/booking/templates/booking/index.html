@@ -1,0 +1,246 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Choose seats</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.seat-charts.css' %}">
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/flexiseats.css' %}">
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-faded">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header"
+            aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-toggleable-xs" id="navbar-header">
+        <a class="navbar-brand" href="/">Cinema</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/schedule">Catalog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/schedule">Schedule<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cinema">About</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav float-xs-right">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="custom-wrapper">
+    <div class="custom-container">
+        <h1>Choose seats for film «{{ seance.movie.title }}»</h1>
+        <p>Зал: {{ seance.hall }}</p>
+        <p>Дата и время сеанса: {{ seance.start_time }}</p>
+        <div id="seat-map">
+            <div class="custom-front-indicator">Front</div>
+        </div>
+        <div class="booking-details">
+            <h2>Booking Details</h2>
+            <h3> Selected Seats (<span id="counter">0</span>):</h3>
+            <ul id="selected-seats">
+            </ul>
+            Total: <b>$<span id="total">0</span></b>
+            <p><input type="button" value="Buy tickets" class="custom-checkout-button" id="checkout"></p>
+            <div id="legend"></div>
+        </div>
+        <div>
+            <p id="seance" style="display: none">{{ seance.id }}</p>
+        </div>
+    </div>
+</div>
+
+<script src='{% static 'js/jquery.min.js' %}'></script>
+<script src='{% static 'js/jquery-2.1.4.min.js' %}'></script>
+<script src='{% static 'js/jquery.seat-charts.js' %}'></script>
+{#    <script src='{% static 'js/jquery.min.js' %}', integrity='', crossorigin='anonymous'></script>#}
+
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    var firstSeatLabel = 1;
+
+    $(document).ready(function () {
+        var seats_list = '{{ result }}';
+        strlist = '{"1":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "2":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "3":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"]}';
+        console.log(seats_list);
+        seats = JSON.parse(seats_list.replace(/&quot;/g,'"'));
+
+        hall_plan =  [];
+        unavailable_seats = [];
+        for (var row in seats){
+            cur_row = ''
+            for (seat in seats[row]){
+                if (seats.hasOwnProperty(row)) {
+                    cur_row += 'e';
+                }
+                console.log(seats[row][seat]);
+                if (seats[row][seat] == true) {
+                    unavailable_seats.push(row + "_" + (parseInt(seat) + 1));
+                }
+            }
+            hall_plan.push(cur_row);
+        }
+        console.log(unavailable_seats);
+
+        var $cart = $('#selected-seats'),
+            $counter = $('#counter'),
+            $total = $('#total'),
+            sc = $('#seat-map').seatCharts({
+                map: hall_plan,
+                seats: {
+                    e: {
+                        price: 40,
+                        classes: 'economy-class', //your custom CSS class
+                        category: 'Economy Class'
+                    }
+
+                },
+                naming: {
+                    top: false,
+                    getLabel: function (character, row, column) {
+                        return firstSeatLabel++;
+                    },
+                },
+                legend: {
+                    node: $('#legend'),
+                    items: [
+                        ['e', 'available', 'Economy Class'],
+                        ['f', 'unavailable', 'Already Booked']
+                    ]
+                },
+                click: function () {
+                    if (this.status() == 'available') {
+                        //let's create a new <li> which we'll add to the cart items
+                        $('<li>' + this.data().category + ' Seat # ' + this.settings.label + ': <b>$' + this.data().price + '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                            .attr('id', 'cart-item-' + this.settings.id)
+                            .data('seatId', this.settings.id)
+                            .appendTo($cart);
+
+                        /*
+                         * Lets update the counter and total
+                         *
+                         * .find function will not find the current seat, because it will change its stauts only after return
+                         * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                         */
+                        $counter.text(sc.find('selected').length + 1);
+                        $total.text(recalculateTotal(sc) + this.data().price);
+
+                        return 'selected';
+                    } else if (this.status() == 'selected') {
+                        //update the counter
+                        $counter.text(sc.find('selected').length - 1);
+                        //and total
+                        $total.text(recalculateTotal(sc) - this.data().price);
+
+                        //remove the item from our cart
+                        $('#cart-item-' + this.settings.id).remove();
+
+                        //seat has been vacated
+                        return 'available';
+                    } else if (this.status() == 'unavailable') {
+                        //seat has been already booked
+                        return 'unavailable';
+                    } else {
+                        return this.style();
+                    }
+                }
+            });
+
+        //this will handle "[cancel]" link clicks
+        $('#selected-seats').on('click', '.cancel-cart-item', function () {
+            //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+            sc.get($(this).parents('li:first').data('seatId')).click();
+        });
+
+        //let's pretend some seats have already been booked
+        sc.get(unavailable_seats).status('unavailable');
+
+        $('#checkout').on('click', function () {
+
+            seance_value = $("#seance").html();
+
+            dataJson = {
+                selected: (sc.find('selected').seatIds),
+                seance: seance_value,
+                price: $("#total").html()
+            };
+
+{#            console.log(dataJson);#}
+            {#                    Uncomment to see data structure in browser console#}
+            $.ajax({
+                type: "POST",
+                url: "../../proceed/",
+                data: JSON.stringify(dataJson),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'text',
+                success: function (response) {
+                    res = JSON.parse(response);
+                    window.location.replace("../../"+res.booking_id);
+                }
+            });
+        })
+    });
+
+    function recalculateTotal(sc) {
+        var total = 0;
+
+        //basically find every selected seat and sum its price
+        sc.find('selected').each(function () {
+            total += this.data().price;
+        });
+
+        return total;
+    }
+</script>
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
+
+</script>
+
+
+<script src='{% static 'js/tether.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/bootstrap.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+</body>
+</html>

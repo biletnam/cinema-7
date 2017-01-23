@@ -36,6 +36,7 @@ a {
     font-size: 12px;
     position: relative;
     height: 401px;
+    width: 300px;
 }
 
 .booking-details h2 {
@@ -89,7 +90,7 @@ div.seatCharts-seat.unavailable {
 
 div.seatCharts-container {
     border-right: 1px dotted #adadad;
-    width: 440px;
+    width: 410px;
     padding: 20px;
     float: left;
 }
@@ -119,5 +120,5 @@ span.seatCharts-legendDescription {
     max-height: 90px;
     overflow-y: scroll;
     overflow-x: unset;
-    width: 170px;
+    width: 210px;
 }

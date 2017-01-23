@@ -157,7 +157,7 @@ span.seatCharts-legendDescription {
       <ul id="selected-seats">
       </ul>
       Total: <b>$<span id="total">0</span></b>
-      <button class="custom-checkout-button">Checkout &raquo;</button>
+      <p><input type="button" value="Checkout" class="custom-checkout-button" id="checkout"></p>
       <div id="legend"></div>
     </div>
   </div>
@@ -302,6 +302,15 @@ var firstSeatLabel = 1;
 				//let's pretend some seats have already been booked
 				sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
 
+                $('#checkout').on('click', function () {
+                    data = {
+                        selected: (sc.find('selected').seatIds)
+                    };
+                    $.ajax({type: "POST", url: "", data: data, dataType: 'json', error: function(data){
+                            window.location.replace("../1");
+                        }
+                    });
+                })
 		});
 
 		function recalculateTotal(sc) {
@@ -314,7 +323,23 @@ var firstSeatLabel = 1;
 
 			return total;
 		}
-
+{#        $(document).ready(function(){#}
+{#            arr =[];#}
+{#            $("#checkout").click(function(){#}
+{#                console.log($.find('selected-seats'));#}
+{#                    $.find('selected-seats').each(function (){#}
+{#                        arr.push(this.data('SeatId'))#}
+{#                });#}
+{#                data = {#}
+{#                    selected: arr#}
+{#                };#}
+                {#                $.ajax({type: "POST", url: "/", data: data, dataType: 'json', success: function(data){#}
+{#                    window.location.replace("http://stackoverflow.com");#}
+{#                }});#}
+{#                console.log(data);#}
+{#                return false;#}
+{#            });#}
+{#        });#}
 		</script><script type="text/javascript">
 
   var _gaq = _gaq || [];

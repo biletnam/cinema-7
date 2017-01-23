@@ -1,5 +1,6 @@
 import json
 
+from django.db import connection
 from django.http import HttpResponse
 from django.middleware.common import logger
 from django.shortcuts import render
@@ -8,7 +9,7 @@ from cinema.schedule.models import Seance, Row, Seat
 
 
 def show(request, id=0):
-    result = {}
+    dictJSON = {}
 
     seance = Seance.objects.get(id=id)
     hall = seance.hall
@@ -18,11 +19,13 @@ def show(request, id=0):
     for row in rowList:
         seatList = []
         for i in range(1, row.seat_count + 1):
-            seat = Seat(Seat.objects.filter(hall=hall, row=row, number=i, seance=seance))
+            seat = Seat.objects.get(hall=hall, row=row, number=i, seance=seance)
             seatList.append(seat.booked)
-        result.update({row.number: seatList})
+        dictJSON.update({str(row.number): seatList})
 
-    context = {'result': result, 'seance': seance}
+    resultJSON = json.dumps(dictJSON)
+
+    context = {'result': resultJSON, 'seance': seance}
     return render(request, 'booking/index.html', context)
 
 
@@ -54,9 +57,12 @@ def create_booking(request):
             hall = seance.hall
             #do this for each selected seat
             for seat in bookingList:
-                row = Row.objects.filter(hall=hall, number = int(seat[0]))
-                number = int(seat[2])
+                indices = seat.split("_")
+                row = Row.objects.filter(hall=hall, number = int(indices[0]))
+                number = int(indices[1])
                 Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
+
+            connection.close()
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))
     else:
         return (HttpResponse(status=404))

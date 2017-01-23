@@ -306,7 +306,9 @@ var firstSeatLabel = 1;
                     data = {
                         selected: (sc.find('selected').seatIds)
                     };
-                    $.ajax({type: "POST", url: "", data: data, dataType: 'json', error: function(data){
+{#                    console.log(data)#}
+{#                    Uncomment to see data structure in browser console#}
+                    $.ajax({type: "POST", url: "", data: data, dataType: 'json', success: function(data){
                             window.location.replace("../../1");
                         }
                     });

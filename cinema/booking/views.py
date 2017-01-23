@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
+from django.views import generic
+from cinema.booking.models import Booking
 from cinema.schedule.models import Seance, Row, Seat
 
 def show(request,id=0):
@@ -22,6 +23,9 @@ def show(request,id=0):
     context = {'result': result}
     return render(request,'booking/index.html', context)
 
+class booking_info(generic.DetailView):
+        model = Booking
+        template_name = 'booking/booking_info.html'
 
 # Руслан Валеев, [12.01.17 14:10]
 # {ряд: {место: true, место: false, ...}, ряд: {}, ...}

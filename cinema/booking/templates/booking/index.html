@@ -99,7 +99,7 @@
         var seats_list = '{{ result }}';
         strlist = '{"1":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "2":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "3":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"]}';
         console.log(seats_list);
-        seats = JSON.parse(strlist);
+        seats = JSON.parse(seats_list.replace(/&quot;/g,'"'));
 
         hall_plan =  [];
         unavailable_seats = [];

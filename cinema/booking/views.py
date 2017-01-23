@@ -18,7 +18,7 @@ def show(request, id=0):
     for row in rowList:
         seatList = []
         for i in range(1, row.seat_count + 1):
-            seat = Seat(Seat.objects.filter(hall=hall, row=row, number=i, seance=seance))
+            seat = Seat.objects.get(hall=hall, row=row, number=i, seance=seance)
             seatList.append(seat.booked)
         dictJSON.update({str(row.number): seatList})
 

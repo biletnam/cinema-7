@@ -8,6 +8,15 @@ class Booking(models.Model):
     seance = models.ForeignKey(Seance)
     seats = fields.ArrayField(models.TextField(), max_length=10)
 
+    def str_seats(self):
+        return_string = ""
+        for seat in self.seats:
+            return_string += (str(seat) + ", ")
+        return(return_string)
+
+    def __str__(self):
+        return("Booking: " + str(self.id) + " " + self.seance.movie.title + " " + self.str_seats())
+
     def get_id(self):
         return self.id
 

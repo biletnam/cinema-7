@@ -97,28 +97,31 @@
 
     $(document).ready(function () {
         var seats_list = '{{ result }}';
+        strlist = '{"1":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "2":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "3":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"]}';
         console.log(seats_list);
+        seats = JSON.parse(seats_list.replace(/&quot;/g,'"'));
 
-        for (var row in seats_list){
-            if (seats_list.hasOwnProperty(row)) {
-                console.log("Row is " + row + ", value is" + seats_list[row]);}
+        hall_plan =  [];
+        unavailable_seats = [];
+        for (var row in seats){
+            cur_row = ''
+            for (seat in seats[row]){
+                if (seats.hasOwnProperty(row)) {
+                    console.log("Row is " + row + ", value is " + seats[row][seat]);
+                    cur_row += 'e';
+                }
+                if (seats[row][seat] == 'True') {
+                    unavailable_seats.push(row + "_" + (parseInt(seat) + 1));
+                }
+            }
+            hall_plan.push(cur_row);
         }
 
         var $cart = $('#selected-seats'),
             $counter = $('#counter'),
             $total = $('#total'),
             sc = $('#seat-map').seatCharts({
-                map: [
-                    'ee_eeeeeeee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'eeeee',
-                ],
+                map: hall_plan,
                 seats: {
                     f: {
                         price: 100,
@@ -191,7 +194,7 @@
         });
 
         //let's pretend some seats have already been booked
-        sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+        sc.get(unavailable_seats).status('unavailable');
 
         $('#checkout').on('click', function () {
 

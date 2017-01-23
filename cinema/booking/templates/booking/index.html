@@ -7,327 +7,351 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Choose seats</title>
-{#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="" crossorigin="anonymous">#}
-{#    <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />#}
+    {#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="" crossorigin="anonymous">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />#}
 
-{#    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/jquery.seat-charts.css' %}">
     <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-{#    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">#}
-{#    <link rel="stylesheet" href="{% static 'css/flexiseats.css' %}">#}
-<style>
-body {
-	font-family: 'Roboto', sans-serif;
-  background-color:#fafafa;
-}
-a {
-	color: #b71a4c;
-}
-.custom-front-indicator {
-	width: 145px;
-	margin: 5px 32px 15px 32px;
-	background-color: #f6f6f6;
-	color: #adadad;
-	text-align: center;
-	padding: 3px;
-	border-radius: 5px;
-}
-.custom-wrapper {
-	width: 100%;
-	text-align: center;
-  margin-top:150px;
-}
-.custom-container {
-	margin: 0 auto;
-	width: 500px;
-	text-align: left;
-}
-.booking-details {
-	float: left;
-	text-align: left;
-	margin-left: 35px;
-	font-size: 12px;
-	position: relative;
-	height: 401px;
-}
-.booking-details h2 {
-	margin: 25px 0 20px 0;
-	font-size: 17px;
-}
-.booking-details h3 {
-	margin: 5px 5px 0 0;
-	font-size: 14px;
-}
-div.seatCharts-cell {
-	color: #182C4E;
-	height: 25px;
-	width: 25px;
-	line-height: 25px;
+    {#    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/flexiseats.css' %}">#}
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+        }
 
-}
-div.seatCharts-seat {
-	color: #FFFFFF;
-	cursor: pointer;
-}
-div.seatCharts-row {
-	height: 35px;
-}
-div.seatCharts-seat.available {
-	background-color: #B9DEA0;
+        a {
+            color: #b71a4c;
+        }
 
-}
-div.seatCharts-seat.available.first-class {
-/* 	background: url(vip.png); */
-	background-color: #3a78c3;
-}
-div.seatCharts-seat.focused {
-	background-color: #76B474;
-}
-div.seatCharts-seat.selected {
-	background-color: #E6CAC4;
-}
-div.seatCharts-seat.unavailable {
-	background-color: #472B34;
-}
-div.seatCharts-container {
-	border-right: 1px dotted #adadad;
-	width: 200px;
-	padding: 20px;
-	float: left;
-}
-div.seatCharts-legend {
-	padding-left: 0px;
-	position: absolute;
-	bottom: 16px;
-}
-ul.seatCharts-legendList {
-	padding-left: 0px;
-}
-span.seatCharts-legendDescription {
-	margin-left: 5px;
-	line-height: 30px;
-}
-.custom-checkout-button {
-	display: block;
-	margin: 10px 0;
-	font-size: 14px;
-}
-#selected-seats {
-	max-height: 90px;
-	overflow-y: scroll;
-	overflow-x: none;
-	width: 170px;
-}
-</style>
+        .custom-front-indicator {
+            width: 145px;
+            margin: 5px 32px 15px 32px;
+            background-color: #f6f6f6;
+            color: #adadad;
+            text-align: center;
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        .custom-wrapper {
+            width: 100%;
+            text-align: center;
+            margin-top: 150px;
+        }
+
+        .custom-container {
+            margin: 0 auto;
+            width: 500px;
+            text-align: left;
+        }
+
+        .booking-details {
+            float: left;
+            text-align: left;
+            margin-left: 35px;
+            font-size: 12px;
+            position: relative;
+            height: 401px;
+        }
+
+        .booking-details h2 {
+            margin: 25px 0 20px 0;
+            font-size: 17px;
+        }
+
+        .booking-details h3 {
+            margin: 5px 5px 0 0;
+            font-size: 14px;
+        }
+
+        div.seatCharts-cell {
+            color: #182C4E;
+            height: 25px;
+            width: 25px;
+            line-height: 25px;
+
+        }
+
+        div.seatCharts-seat {
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+
+        div.seatCharts-row {
+            height: 35px;
+        }
+
+        div.seatCharts-seat.available {
+            background-color: #B9DEA0;
+
+        }
+
+        div.seatCharts-seat.available.first-class {
+            /* 	background: url(vip.png); */
+            background-color: #3a78c3;
+        }
+
+        div.seatCharts-seat.focused {
+            background-color: #76B474;
+        }
+
+        div.seatCharts-seat.selected {
+            background-color: #E6CAC4;
+        }
+
+        div.seatCharts-seat.unavailable {
+            background-color: #472B34;
+        }
+
+        div.seatCharts-container {
+            border-right: 1px dotted #adadad;
+            width: 200px;
+            padding: 20px;
+            float: left;
+        }
+
+        div.seatCharts-legend {
+            padding-left: 0px;
+            position: absolute;
+            bottom: 16px;
+        }
+
+        ul.seatCharts-legendList {
+            padding-left: 0px;
+        }
+
+        span.seatCharts-legendDescription {
+            margin-left: 5px;
+            line-height: 30px;
+        }
+
+        .custom-checkout-button {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        #selected-seats {
+            max-height: 90px;
+            overflow-y: scroll;
+            overflow-x: none;
+            width: 170px;
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-faded">
-        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-toggleable-xs" id="navbar-header">
-          <a class="navbar-brand" href="/">Cinema</a>
-          <ul class="nav navbar-nav">
+<nav class="navbar navbar-light bg-faded">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header"
+            aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-toggleable-xs" id="navbar-header">
+        <a class="navbar-brand" href="/">Cinema</a>
+        <ul class="nav navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Catalog<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Catalog<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/schedule">Schedule</a>
+                <a class="nav-link" href="/schedule">Schedule</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cinema">About</a>
+                <a class="nav-link" href="/cinema">About</a>
             </li>
-          </ul>
-            <ul class="nav navbar-nav float-xs-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        </ul>
+        <ul class="nav navbar-nav float-xs-right">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <div class="custom-wrapper">
-  <div class="custom-container">
-  <h1>Choose seats</h1>
-    <div id="seat-map">
-      <div class="custom-front-indicator">Front</div>
+    <div class="custom-container">
+        <h1>Choose seats</h1>
+        <div id="seat-map">
+            <div class="custom-front-indicator">Front</div>
+        </div>
+        <div class="booking-details">
+            <h2>Booking Details</h2>
+            <h3> Selected Seats (<span id="counter">0</span>):</h3>
+            <ul id="selected-seats">
+            </ul>
+            Total: <b>$<span id="total">0</span></b>
+            <p><input type="button" value="Checkout" class="custom-checkout-button" id="checkout"></p>
+            <div id="legend"></div>
+        </div>
+        <div>
+            <p id="seance">{{ seance.id }}</p>
+        </div>
     </div>
-    <div class="booking-details">
-      <h2>Booking Details</h2>
-      <h3> Selected Seats (<span id="counter">0</span>):</h3>
-      <ul id="selected-seats">
-      </ul>
-      Total: <b>$<span id="total">0</span></b>
-      <p><input type="button" value="Checkout" class="custom-checkout-button" id="checkout"></p>
-      <div id="legend"></div>
-    </div>
-      <div>
-         <p id = "seance">{{ seance.id }}</p>
-      </div>
-  </div>
 </div>
 
-    <script src='{% static 'js/jquery.min.js' %}'></script>
-    <script src='{% static 'js/jquery-2.1.4.min.js' %}'></script>
-    <script src='{% static 'js/jquery.seat-charts.js' %}'></script>
+<script src='{% static 'js/jquery.min.js' %}'></script>
+<script src='{% static 'js/jquery-2.1.4.min.js' %}'></script>
+<script src='{% static 'js/jquery.seat-charts.js' %}'></script>
 {#    <script src='{% static 'js/jquery.min.js' %}', integrity='', crossorigin='anonymous'></script>#}
 
-     <script>
-        function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
+        return cookieValue;
     }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken');
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
         }
-    }
-});
-         var firstSeatLabel = 1;
+    });
+    var firstSeatLabel = 1;
 
-        $(document).ready(function() {
-            var $cart = $('#selected-seats'),
+    $(document).ready(function () {
+        var $cart = $('#selected-seats'),
                 $counter = $('#counter'),
                 $total = $('#total'),
                 sc = $('#seat-map').seatCharts({
-                map: [
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'ee_ee',
-                    'eeeee',
-                ],
-                seats: {
-                    f: {
-                        price   : 100,
-                        classes : 'first-class', //your custom CSS class
-                        category: 'First Class'
+                    map: [
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'ee_ee',
+                        'eeeee',
+                    ],
+                    seats: {
+                        f: {
+                            price: 100,
+                            classes: 'first-class', //your custom CSS class
+                            category: 'First Class'
+                        },
+                        e: {
+                            price: 40,
+                            classes: 'economy-class', //your custom CSS class
+                            category: 'Economy Class'
+                        }
+
                     },
-                    e: {
-                        price   : 40,
-                        classes : 'economy-class', //your custom CSS class
-                        category: 'Economy Class'
-                    }
-
-                },
-                naming : {
-                    top : false,
-                    getLabel : function (character, row, column) {
-                        return firstSeatLabel++;
+                    naming: {
+                        top: false,
+                        getLabel: function (character, row, column) {
+                            return firstSeatLabel++;
+                        },
                     },
-                },
-                legend : {
-                    node : $('#legend'),
-                    items : [
-                        [ 'f', 'available',   'First Class' ],
-                        [ 'e', 'available',   'Economy Class'],
-                        [ 'f', 'unavailable', 'Already Booked']
-                    ]
-                },
-                click: function () {
-                    if (this.status() == 'available') {
-                        //let's create a new <li> which we'll add to the cart items
-                        $('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
-                            .attr('id', 'cart-item-'+this.settings.id)
-                            .data('seatId', this.settings.id)
-                            .appendTo($cart);
+                    legend: {
+                        node: $('#legend'),
+                        items: [
+                            ['f', 'available', 'First Class'],
+                            ['e', 'available', 'Economy Class'],
+                            ['f', 'unavailable', 'Already Booked']
+                        ]
+                    },
+                    click: function () {
+                        if (this.status() == 'available') {
+                            //let's create a new <li> which we'll add to the cart items
+                            $('<li>' + this.data().category + ' Seat # ' + this.settings.label + ': <b>$' + this.data().price + '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                    .attr('id', 'cart-item-' + this.settings.id)
+                                    .data('seatId', this.settings.id)
+                                    .appendTo($cart);
 
-                        /*
-                         * Lets update the counter and total
-                         *
-                         * .find function will not find the current seat, because it will change its stauts only after return
-                         * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-                         */
-                        $counter.text(sc.find('selected').length+1);
-                        $total.text(recalculateTotal(sc)+this.data().price);
+                            /*
+                             * Lets update the counter and total
+                             *
+                             * .find function will not find the current seat, because it will change its stauts only after return
+                             * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                             */
+                            $counter.text(sc.find('selected').length + 1);
+                            $total.text(recalculateTotal(sc) + this.data().price);
 
-                        return 'selected';
-                    } else if (this.status() == 'selected') {
-                        //update the counter
-                        $counter.text(sc.find('selected').length-1);
-                        //and total
-                        $total.text(recalculateTotal(sc)-this.data().price);
+                            return 'selected';
+                        } else if (this.status() == 'selected') {
+                            //update the counter
+                            $counter.text(sc.find('selected').length - 1);
+                            //and total
+                            $total.text(recalculateTotal(sc) - this.data().price);
 
-                        //remove the item from our cart
-                        $('#cart-item-'+this.settings.id).remove();
+                            //remove the item from our cart
+                            $('#cart-item-' + this.settings.id).remove();
 
-                        //seat has been vacated
-                        return 'available';
-                    } else if (this.status() == 'unavailable') {
-                        //seat has been already booked
-                        return 'unavailable';
-                    } else {
-                        return this.style();
-                    }
-                }
-            });
-
-            //this will handle "[cancel]" link clicks
-            $('#selected-seats').on('click', '.cancel-cart-item', function () {
-                //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-                sc.get($(this).parents('li:first').data('seatId')).click();
-            });
-
-            //let's pretend some seats have already been booked
-            sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
-
-            $('#checkout').on('click', function () {
-
-                seance_value = $("#seance").html();
-                data = {
-                    selected: (sc.find('selected').seatIds),
-                    seance: seance_value
-                };
-    {#                    console.log(data)#}
-    {#                    Uncomment to see data structure in browser console#}
-                $.ajax({type: "POST", url: "../../proceed/", data: data, dataType: 'json', success: function(data){
-                        window.location.replace("../../1");
+                            //seat has been vacated
+                            return 'available';
+                        } else if (this.status() == 'unavailable') {
+                            //seat has been already booked
+                            return 'unavailable';
+                        } else {
+                            return this.style();
+                        }
                     }
                 });
-            })
+
+        //this will handle "[cancel]" link clicks
+        $('#selected-seats').on('click', '.cancel-cart-item', function () {
+            //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+            sc.get($(this).parents('li:first').data('seatId')).click();
+        });
+
+        //let's pretend some seats have already been booked
+        sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+
+        $('#checkout').on('click', function () {
+
+            seance_value = $("#seance").html();
+            data = {
+                selected: (sc.find('selected').seatIds),
+                seance: seance_value
+            };
+            {#                    console.log(data)#}
+            {#                    Uncomment to see data structure in browser console#}
+            $.ajax({
+                type: "POST", url: "../../proceed/", data: data, dataType: 'json', success: function (data) {
+                    window.location.replace("../../1");
+                }
+            });
+        })
     });
 
-		function recalculateTotal(sc) {
-			var total = 0;
+    function recalculateTotal(sc) {
+        var total = 0;
 
-			//basically find every selected seat and sum its price
-			sc.find('selected').each(function () {
-				total += this.data().price;
-			});
+        //basically find every selected seat and sum its price
+        sc.find('selected').each(function () {
+            total += this.data().price;
+        });
 
-			return total;
-		}
-		</script><script type="text/javascript">
+        return total;
+    }
+</script>
+<script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-36251023-1']);
-  _gaq.push(['_setDomainName', 'jqueryscript.net']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36251023-1']);
+    _gaq.push(['_setDomainName', 'jqueryscript.net']);
+    _gaq.push(['_trackPageview']);
 
-     </script>
+</script>
 
 
-    <script src='{% static 'js/tether.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
-    <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
+<script src='{% static 'js/tether.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/bootstrap.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
 </body>
 </html>

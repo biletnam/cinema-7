@@ -41,7 +41,9 @@
 
 <div class="custom-wrapper">
     <div class="custom-container">
-        <h1>Choose seats for {{ seance }}</h1>
+        <h1>Choose seats for film «{{ seance.movie.title }}»</h1>
+        <p>Зал: {{ seance.hall }}</p>
+        <p>Дата и время сеанса: {{ seance.start_time }}</p>
         <div id="seat-map">
             <div class="custom-front-indicator">Front</div>
         </div>
@@ -124,11 +126,6 @@
             sc = $('#seat-map').seatCharts({
                 map: hall_plan,
                 seats: {
-                    f: {
-                        price: 100,
-                        classes: 'first-class', //your custom CSS class
-                        category: 'First Class'
-                    },
                     e: {
                         price: 40,
                         classes: 'economy-class', //your custom CSS class
@@ -145,7 +142,6 @@
                 legend: {
                     node: $('#legend'),
                     items: [
-                        ['f', 'available', 'First Class'],
                         ['e', 'available', 'Economy Class'],
                         ['f', 'unavailable', 'Already Booked']
                     ]

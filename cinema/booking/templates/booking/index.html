@@ -316,17 +316,19 @@
         $('#checkout').on('click', function () {
 
             seance_value = $("#seance").html();
-            data = {
+
+            dataJson = {
                 selected: (sc.find('selected').seatIds),
-                seance: seance_value
+                seance: seance_value,
+                price: $("#total").html()
             };
 
-            console.log(data)
+            console.log(dataJson);
             {#                    Uncomment to see data structure in browser console#}
             $.ajax({
                 type: "POST",
                 url: "../../proceed/",
-                data: data,
+                data: JSON.stringify(dataJson),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'text',
                 success: function (data) {

@@ -20,7 +20,7 @@ def show(request,id=0):
         result.update({row.number: seatList})
 
 
-    context = {'result': result}
+    context = {'result': result, 'seance': seance}
     return render(request,'booking/index.html', context)
 
 # class booking_info(generic.DetailView):
@@ -31,6 +31,7 @@ def show_booking_info(request,id=0):
     booking = Booking.objects.get(id=id)
     context = {'booking': booking}
     return render(request, 'booking/booking_info.html', context)
+
 
 # Руслан Валеев, [12.01.17 14:10]
 # {ряд: {место: true, место: false, ...}, ряд: {}, ...}

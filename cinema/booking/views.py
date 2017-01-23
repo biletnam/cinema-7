@@ -1,5 +1,6 @@
 import json
 
+from django.db import connection
 from django.http import HttpResponse
 from django.middleware.common import logger
 from django.shortcuts import render
@@ -60,6 +61,8 @@ def create_booking(request):
                 row = Row.objects.filter(hall=hall, number = int(indices[0]))
                 number = int(indices[1])
                 Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
+
+            connection.close()
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))
     else:
         return (HttpResponse(status=404))

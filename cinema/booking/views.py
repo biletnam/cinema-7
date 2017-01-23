@@ -25,8 +25,14 @@ def show(request, id=0):
     context = {'result': result, 'seance': seance}
     return render(request, 'booking/index.html', context)
 
-def show_booking_info(request, id):
-    context = {'id': id}
+
+def show_booking_info(request, id=0):
+    booking = Booking.objects.get(id=id)
+    seance = booking.seance
+    context = {
+        'booking': booking,
+        'seance': seance,
+    }
     return render(request, 'booking/booking_info.html',context)
 
 def create_booking(request):
@@ -39,7 +45,9 @@ def create_booking(request):
             price = jsonResponse.get("price")
 
             booking = Booking.objects.create(price=price, seance=seance, seats=bookingList)
+            response_data = {}
+            response_data["booking_id"] = booking.get_id()
 
-            return (HttpResponse(status=200))
+            return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))
     else:
         return (HttpResponse(status=404))

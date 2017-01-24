@@ -64,6 +64,8 @@ div.seatCharts-seat {
 
 div.seatCharts-row {
     height: 35px;
+    display: table;
+    margin: auto
 }
 
 div.seatCharts-seat.available {

@@ -49,7 +49,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
-                                <input type="tel" class="form-control" pattern="[0-9]{11}" oninvalid="setCustomValidity('Enter correct phone number')" maxlength="11" name="phone" id="phone"  placeholder="Enter your Phone" required/>
+                                <input type="tel" class="form-control" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" oninvalid="setCustomValidity('Enter correct phone number')" maxlength="11" name="phone" id="phone"  placeholder="Enter your Phone" required/>
                             </div>
                         </div>
                     </div>

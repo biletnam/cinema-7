@@ -57,13 +57,10 @@ def account_info(request, id=0):
         booking["title"] = entity.seance.movie.title
         booking["time"] = entity.seance.start_time.timestamp()
         bookings.append(booking)
-
     response["booking"] = bookings
 
     data = json.dumps(response)
-
     context = {
         'data': data
     }
-    print(data)
     return render(request, "account_info.html", context)

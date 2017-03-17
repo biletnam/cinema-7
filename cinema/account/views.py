@@ -16,7 +16,7 @@ def redirect_to_self(request):
     if request.user.is_authenticated():
         return redirect("./"+str(request.user.id))
     else:
-        return redirect("./login")
+        return redirect("login-url")
 
 def auth_user(request):
     if request.method == 'POST':
@@ -45,24 +45,30 @@ def create_user(request):
         return HttpResponse('not POST')
 
 def account_info(request, id=0):
-    this_user = User.objects.get(id=id)
+    if request.user.is_authenticated():
+        if int(request.user.id) == int(id):
+            this_user = User.objects.get(id=id)
 
-    response = {}
-    response["username"] = this_user.email
-    response["phone"] = this_user.phone
+            response = {}
+            response["username"] = this_user.email
+            response["phone"] = this_user.phone
 
-    bookings = []
-    queryset = Booking.objects.filter(user=this_user.id)
-    for entity in queryset:
-        booking = {}
-        booking["id"] = entity.id
-        booking["title"] = entity.seance.movie.title
-        booking["time"] = entity.seance.start_time.timestamp()
-        bookings.append(booking)
-    response["booking"] = bookings
+            bookings = []
+            queryset = Booking.objects.filter(user=this_user.id)
+            for entity in queryset:
+                booking = {}
+                booking["id"] = entity.id
+                booking["title"] = entity.seance.movie.title
+                booking["time"] = entity.seance.start_time.timestamp()
+                bookings.append(booking)
+            response["booking"] = bookings
 
-    data = json.dumps(response)
-    context = {
-        'data': data
-    }
-    return render(request, "account_info.html", context)
+            data = json.dumps(response)
+            context = {
+                'data': data
+            }
+            return render(request, "account_info.html", context)
+        else:
+            return redirect("to-self")
+    else:
+        return redirect("login-url")

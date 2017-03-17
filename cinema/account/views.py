@@ -59,15 +59,10 @@ def account_info(request, id=0):
                 booking = {}
                 booking["id"] = entity.id
                 booking["title"] = entity.seance.movie.title
-                booking["time"] = entity.seance.start_time.timestamp()
+                booking["time"] = entity.seance.start_time
                 bookings.append(booking)
             response["booking"] = bookings
-
-            data = json.dumps(response)
-            context = {
-                'data': data
-            }
-            return render(request, "account_info.html", context)
+            return render(request, "account_info.html", context=response)
         else:
             return redirect("to-self")
     else:

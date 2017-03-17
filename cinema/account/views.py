@@ -43,7 +43,7 @@ def create_user(request):
         user_phone = int(user_info["phone"])
         if user_phone is not None:
             user = User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
-            return redirect("../../" + str(request.user.id))
+            return redirect("../../" + str(user.id))
         else:
             return HttpResponse("not ok")
     else:

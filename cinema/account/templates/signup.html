@@ -50,7 +50,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="phone" id="phone"  placeholder="Enter your Phone"/>
+                                <input type="tel" class="form-control" pattern="[0-9]{11}" maxlength="11" name="phone" id="phone"  placeholder="Enter your Phone" required/>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+                                <input type="email" class="form-control" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Enter your Email" required/>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                                <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password" required/>
                             </div>
                         </div>
                     </div>

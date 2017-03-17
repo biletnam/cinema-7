@@ -7,8 +7,12 @@ from django.core.context_processors import csrf
 import json
 
 
+@csrf_protect
 def login_view(request):
-    return render(request, 'login.html')
+    c = {}
+    c.update(csrf(request))
+    return render(request, 'login.html', c)
+
 
 @csrf_protect
 def signup_view(request):

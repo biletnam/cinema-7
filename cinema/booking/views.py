@@ -41,7 +41,7 @@ def show_booking_info(request, id=0):
         }
         return render(request, 'booking/booking_info.html',context)
     else:
-        return HttpResponse(status=403)
+        return render(request, 'booking/forbidden.html',status=403)
 
 def create_booking(request):
     if request.is_ajax():

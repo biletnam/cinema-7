@@ -32,12 +32,16 @@ def show(request, id=0):
 
 def show_booking_info(request, id=0):
     booking = Booking.objects.get(id=id)
-    seance = booking.seance
-    context = {
-        'booking': booking,
-        'seance': seance,
-    }
-    return render(request, 'booking/booking_info.html',context)
+
+    if User.objects.get(id=request.user.id) == booking.user:
+        seance = booking.seance
+        context = {
+            'booking': booking,
+            'seance': seance,
+        }
+        return render(request, 'booking/booking_info.html',context)
+    else:
+        return HttpResponse(status=403)
 
 def create_booking(request):
     if request.is_ajax():

@@ -42,11 +42,11 @@ def create_user(request):
     c = {}
     c.update(csrf(request))
     if request.method == 'POST':
-        user_info = json.loads(request.body.decode, encoding='UTF-8')
+        user_info = request.POST
         user_phone = int(user_info["phone"])
         if user_phone is not None:
             user = User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
-            return redirect("../" + str(request.user.id))
+            return redirect("../../" + str(request.user.id))
         else:
             return HttpResponse("not ok")
     else:

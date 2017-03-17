@@ -24,7 +24,7 @@ def redirect_to_self(request):
 
 def auth_user(request):
     if request.method == 'POST':
-        user_info = json.loads(request.body.decode, encoding='UTF-8')
+        user_info = request.POST
         user = authenticate(email=user_info["email"], password=user_info["password"])
         if user is not None:
             logout(request)

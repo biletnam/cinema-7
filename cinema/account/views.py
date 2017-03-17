@@ -37,6 +37,7 @@ def auth_user(request):
         return HttpResponse('not POST')
 
 
+
 @csrf_protect
 def create_user(request):
     c = {}

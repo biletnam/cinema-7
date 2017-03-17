@@ -57,7 +57,6 @@
     }
     var seats = "{{ booking.seats }}".replace(/&#39;/g, '"');
     var seats_array = JSON.parse(seats);
-    console.log(seats_array);
     super_str = "";
     for (var seat in seats_array) {
         cur_seat = seats_array[seat].split("_");
@@ -65,10 +64,9 @@
         col = cur_seat[1];
         super_str += "Ваш ряд — " + row + " Ваше место — " + col + "<br>";
         insertText(super_str);
-        console.log(row, col);
 
     }
-    {#        console.log(seats);#}
+    
 </script>
 <script src='{% static 'js/jquery.min.js' %}' ,
         integrity='sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7' ,

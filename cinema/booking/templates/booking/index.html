@@ -102,7 +102,6 @@
         var seance_price = parseInt('{{ seance.price }}')
         var seats_list = '{{ result }}';
         strlist = '{"1":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "2":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "3":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"]}';
-        console.log(seats_list);
         seats = JSON.parse(seats_list.replace(/&quot;/g, '"'));
 
         hall_plan = [];
@@ -113,14 +112,12 @@
                 if (seats.hasOwnProperty(row)) {
                     cur_row += 'e';
                 }
-                console.log(seats[row][seat]);
                 if (seats[row][seat] == true) {
                     unavailable_seats.push(row + "_" + (parseInt(seat) + 1));
                 }
             }
             hall_plan.push(cur_row);
         }
-        console.log(unavailable_seats);
 
         var $cart = $('#selected-seats'),
             $counter = $('#counter'),
@@ -205,8 +202,6 @@
                 price: $("#total").html()
             };
 
-            {#            console.log(dataJson);#}
-            {#                    Uncomment to see data structure in browser console#}
             $.ajax({
                 type: "POST",
                 url: "../../proceed/",

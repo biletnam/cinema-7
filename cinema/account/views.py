@@ -21,4 +21,4 @@ def create_user(request, user_json='{"email": "test@test.com", "password": "1234
         return HttpResponse("not ok")
 
 def account_info(request, id=0):
-    return
+    return HttpResponse("account page dummy")

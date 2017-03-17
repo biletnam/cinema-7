@@ -3,6 +3,12 @@ from cinema.account.models import User
 from django.contrib.auth import authenticate, login, logout
 import json
 
+def login_view(request):
+    return render(request, 'login.html')
+
+def signup_view(request):
+    return render(request, 'signup.html')
+
 def auth_user(request):#, user_json='{"email": "test@test.com", "password": "12345678"}'):
     user_info = json.loads(request.body.decode, encoding='UTF-8')
     user = authenticate(email=user_info["email"], password=user_info["password"])

@@ -2,12 +2,9 @@ from django.shortcuts import render, HttpResponse, redirect
 from cinema.account.models import User
 from cinema.booking.models import Booking
 from django.contrib.auth import authenticate, login, logout
-import json
-
 
 def login_view(request):
     return render(request, 'login.html')
-
 
 def signup_view(request):
     return render(request, 'signup.html')

@@ -3,12 +3,15 @@ from cinema.account.models import UserManager, User
 from django.contrib.auth import authenticate
 import json
 
-def auth_user(request, user_json='{"email": "test@test.com", "password": "12345678"}'):
+def auth_user(request, user_json='{"email": "test@test.com", "password": "123456789"}'):
     user_info = json.loads(user_json)
-    user = authenticate()
-    return HttpResponse('ok')
+    user = authenticate(email=user_info["email"], password=user_info["password"])
+    if user is not None:
+        return HttpResponse('ok')
+    else:
+        return HttpResponse('not ok')
 
 def create_user(request, user_json='{"email": "test@test.com", "password": "12345678"}'):
     user_info = json.loads(user_json)
     user = User.objects.create_user(email=user_info["email"], password=user_info["password"])
-    return HttpResponse("user"+user.email+"created")
+    return HttpResponse("user "+user.email+" created")

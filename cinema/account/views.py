@@ -1,13 +1,16 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from cinema.account.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 import json
 
 def auth_user(request, user_json='{"email": "test@test.com", "password": "12345678"}'):
     user_info = json.loads(user_json)
     user = authenticate(email=user_info["email"], password=user_info["password"])
     if user is not None:
-        return HttpResponse('ok')
+        logout(request)
+        login(request, user)
+        print(user.email + " logged in")
+        return redirect("../"+str(request.user.id))
     else:
         return HttpResponse('not ok')
 

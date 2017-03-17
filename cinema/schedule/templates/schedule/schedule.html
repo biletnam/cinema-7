@@ -6,77 +6,80 @@
     <title>All films</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}"/>
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-faded">
-        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-toggleable-xs" id="navbar-header">
-          <a class="navbar-brand" href="/">Cinema</a>
-          <ul class="nav navbar-nav">
+<nav class="navbar navbar-light bg-faded">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header"
+            aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-toggleable-xs" id="navbar-header">
+        <a class="navbar-brand" href="/">Cinema</a>
+        <ul class="nav navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Catalog<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Catalog<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/schedule">Schedule</a>
+                <a class="nav-link" href="/schedule">Schedule</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cinema">About</a>
+                <a class="nav-link" href="/cinema">About</a>
             </li>
-          </ul>
-            <ul class="nav navbar-nav float-xs-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Расписание</h2>
-                <ul class="nav nav-pills">
+        </ul>
+        <ul class="nav navbar-nav float-xs-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/account/login/"><i class="fa fa-user-circle-o"
+                                                              aria-hidden="true"></i>User</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Расписание</h2>
+            <ul class="nav nav-pills">
                 {% for date in dateList %}
                     <li class="nav-item">
                         <a class="nav-link" href="/schedule/{{ date }}" id="{{ date }}">{{ date }}</a>
-                     </li>
+                    </li>
                 {% endfor %}
-                </ul>
-                <hr>
-                {% if not seancesExists %}
-                    <p>Seances is empty</p>
-                {% else %}
-                     <table class="">
-                        <tbody>
-                            {% for movieKey, seanceTimeList in seancesDict.items %}
-                                <tr>
-                                    <th>
+            </ul>
+            <hr>
+            {% if not seancesExists %}
+                <p>Seances is empty</p>
+            {% else %}
+                <table class="">
+                    <tbody>
+                    {% for movieKey, seanceTimeList in seancesDict.items %}
+                        <tr>
+                            <th>
                                         <span>
-                                            <div style="padding:0 2em 0 0"><a href="../../movie/{{movieKey.id}}"> {{movieKey.title}} </a></div>
+                                            <div style="padding:0 2em 0 0">
+                                                <a href="../../movie/{{ movieKey.id }}"> {{ movieKey.title }} </a></div>
                                         </span>
-                                    </th>
-                                    <td>
-                                        {% for time, seance in seanceTimeList %}
-                                            <a href="../../booking/{{ seance }}/select/" rel="#">{{ time }}</a>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-            </div>
+                            </th>
+                            <td>
+                                {% for time, seance in seanceTimeList %}
+                                    <a href="../../booking/{{ seance }}/select/" rel="#">{{ time }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </div>
-    <script>
-        today_nav = document.getElementById("{{ today }}");
-        today_nav.setAttribute("class","nav-link active");
-    </script>
-    <script src='{% static 'js/jquery.min.js' %}', integrity='', crossorigin='anonymous'></script>
-    <script src='{% static 'js/tether.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
-    <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
+</div>
+<script>
+    today_nav = document.getElementById("{{ today }}");
+    today_nav.setAttribute("class", "nav-link active");
+</script>
+<script src='{% static 'js/jquery.min.js' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/tether.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/bootstrap.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
 </body>
 </html>

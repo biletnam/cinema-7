@@ -8,7 +8,7 @@ from django.utils.timezone import localtime
 class SeanceAdminForm(ModelForm):
     class Meta:
         model = Seance
-        fields = ("start_time", "hall", "movie")
+        fields = ("start_time", "hall", "movie", "price")
 
     def clean(self):
         # run the standard clean method first

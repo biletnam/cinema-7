@@ -12,3 +12,6 @@
 /cinema/schedule/__pycache__/
 /cinema/booking/__init__.py
 /cinema/booking/__pycache__/
+/cinema/account/__init__.py
+*.pyc
+

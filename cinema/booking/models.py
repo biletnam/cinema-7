@@ -1,12 +1,16 @@
 from django.db import models
-from cinema.schedule.models import Seance
+from cinema.schedule.models import Seance, Row, Hall, Seat
 from django.contrib.postgres import fields
+from django.conf import settings
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 
 
 class Booking(models.Model):
     price = models.FloatField()
     seance = models.ForeignKey(Seance)
     seats = fields.ArrayField(models.TextField(), max_length=10)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 
     def str_seats(self):
         return_string = ""
@@ -22,3 +26,14 @@ class Booking(models.Model):
 
     def get_movie(self):
         return self.seance.movie
+
+
+@receiver(pre_delete, sender=Booking)
+def booking_delete(sender, instance, **kwargs):
+    seance = instance.seance
+    hall = seance.hall
+    for seat in instance.seats:
+        indices = seat.split("_")
+        row = Row.objects.filter(hall=hall, number=int(indices[0]))
+        number = int(indices[1])
+        Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=False)

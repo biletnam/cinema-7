@@ -37,6 +37,7 @@ class Seance(models.Model):
     end_time = models.DateTimeField(null=False, editable=False)
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie)
+    price = models.IntegerField(default=0)
 
     def __str__(self):
         return self.movie.title + " " + self.hall.name
@@ -47,7 +48,7 @@ class Seance(models.Model):
 
         for row in rows:
             for i in range(1, row.seat_count + 1):
-                seat = Seat(hall = self.hall, row = row, number=i, seance = self, booked=False)
+                seat = Seat(hall = self.hall, row = row, number=i, seance = self, booked=False, price = self.price)
                 seats_list.append(seat)
 
         Seat.objects.bulk_create(seats_list)
@@ -64,6 +65,7 @@ class Seat(models.Model):
     number = models.IntegerField(default=0)
     seance = models.ForeignKey(Seance)
     booked = models.BooleanField(default=False)
+    price = models.IntegerField(default=0)
 
     def __str__(self):
         return "%s: %d-%d" % (self.hall.name, self.row.number, self.number)

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'cinema.info',
     'cinema.schedule',
     'cinema.booking',
+    'cinema.account',
     'star_ratings',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+AUTH_USER_MODEL = 'account.User'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

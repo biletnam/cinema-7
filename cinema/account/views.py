@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from cinema.account.models import User
+from cinema.booking.models import Booking
 from django.contrib.auth import authenticate, login, logout
 import json
 
@@ -10,7 +11,7 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def redirect_to_self(request):
-    if request.user is not None:
+    if request.user.is_authenticated():
         return redirect("./"+str(request.user.id))
     else:
         return redirect("./login")
@@ -43,4 +44,26 @@ def create_user(request):
 
 def account_info(request, id=0):
     this_user = User.objects.get(id=id)
-    return HttpResponse("account page dummy")
+
+    response = {}
+    response["username"] = this_user.email
+    response["phone"] = this_user.phone
+
+    bookings = []
+    queryset = Booking.objects.filter(user=this_user.id)
+    for entity in queryset:
+        booking = {}
+        booking["id"] = entity.id
+        booking["title"] = entity.seance.movie.title
+        booking["time"] = entity.seance.start_time.timestamp()
+        bookings.append(booking)
+
+    response["booking"] = bookings
+
+    data = json.dumps(response)
+
+    context = {
+        'data': data
+    }
+    print(data)
+    return render(request, "account_info.html", context)

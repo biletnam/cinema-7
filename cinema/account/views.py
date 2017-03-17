@@ -26,7 +26,7 @@ def auth_user(request):
             logout(request)
             login(request, user)
             print(user.email + " logged in")
-            return redirect("../"+str(request.user.id))
+            return redirect("../../"+str(request.user.id))
         else:
             return HttpResponse('not ok')
     else:

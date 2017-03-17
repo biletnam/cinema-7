@@ -11,7 +11,6 @@ def signup_view(request):
 
 def redirect_to_self(request):
     if request.user is not None:
-        print(str(request.user.id))
         return redirect("./"+str(request.user.id))
     else:
         return redirect("./login")

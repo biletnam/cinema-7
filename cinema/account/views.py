@@ -21,7 +21,7 @@ def auth_user(request):
         else:
             return HttpResponse('not ok')
     else:
-        return HttpResponse(status=404)
+        return HttpResponse('not POST')
 
 def create_user(request):
     if request.method == 'POST':
@@ -33,7 +33,7 @@ def create_user(request):
         else:
             return HttpResponse("not ok")
     else:
-        return HttpResponse(status=404)
+        return HttpResponse('not POST')
 
 def account_info(request, id=0):
     this_user = User.objects.get(id=id)

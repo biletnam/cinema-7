@@ -53,14 +53,17 @@ def account_info(request, id=0):
             response["username"] = this_user.email
             response["phone"] = this_user.phone
 
-    bookings = []
-    queryset = Booking.objects.filter(user=this_user.id)
-    for entity in queryset:
-        booking = {}
-        booking["id"] = entity.id
-        booking["title"] = entity.seance.movie.title
-        booking["time"] = entity.seance.start_time
-        bookings.append(booking)
-    response["booking"] = bookings
-
-    return render(request, "account_info.html", context=response)
+            bookings = []
+            queryset = Booking.objects.filter(user=this_user.id)
+            for entity in queryset:
+                booking = {}
+                booking["id"] = entity.id
+                booking["title"] = entity.seance.movie.title
+                booking["time"] = entity.seance.start_time
+                bookings.append(booking)
+            response["booking"] = bookings
+            return render(request, "account_info.html", context=response)
+        else:
+            return redirect("to-self")
+    else:
+        return redirect("login-url")

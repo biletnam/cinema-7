@@ -10,7 +10,7 @@ def signup_view(request):
     return render(request, 'signup.html')
 
 def redirect_to_self(request):
-    if request.user is not None:
+    if request.user.is_authenticated():
         return redirect("./"+str(request.user.id))
     else:
         return redirect("./login")

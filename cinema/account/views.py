@@ -61,8 +61,4 @@ def account_info(request, id=0):
         bookings.append(booking)
     response["booking"] = bookings
 
-    data = json.dumps(response)
-    context = {
-        'data': data
-    }
-    return render(request, "account_info.html", context)
+    return render(request, "account_info.html", context=response)

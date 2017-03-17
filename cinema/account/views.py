@@ -10,11 +10,8 @@ import json
 def login_view(request):
     return render(request, 'login.html')
 
-@csrf_protect
 def signup_view(request):
-    c = {}
-    c.update(csrf(request))
-    return render(request, 'signup.html', c)
+    return render(request, 'signup.html')
 
 def redirect_to_self(request):
     if request.user.is_authenticated():

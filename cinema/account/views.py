@@ -9,6 +9,13 @@ def login_view(request):
 def signup_view(request):
     return render(request, 'signup.html')
 
+def redirect_to_self(request):
+    if request.user is not None:
+        print(str(request.user.id))
+        return redirect("./"+str(request.user.id))
+    else:
+        return redirect("./login")
+
 def auth_user(request):
     if request.method == 'POST':
         user_info = json.loads(request.body.decode, encoding='UTF-8')

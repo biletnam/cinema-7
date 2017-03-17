@@ -2,13 +2,12 @@ from django.shortcuts import render, HttpResponse, redirect
 from cinema.account.models import User
 from cinema.booking.models import Booking
 from django.contrib.auth import authenticate, login, logout
-from django.views.decorators.csrf import csrf_protect
-from django.core.context_processors import csrf
 import json
 
 
 def login_view(request):
     return render(request, 'login.html')
+
 
 def signup_view(request):
     return render(request, 'signup.html')
@@ -32,7 +31,6 @@ def auth_user(request):
             return HttpResponse('not ok')
     else:
         return HttpResponse('not POST')
-
 
 def create_user(request):
     if request.method == 'POST':

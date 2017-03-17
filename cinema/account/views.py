@@ -9,16 +9,19 @@ def login_view(request):
 def signup_view(request):
     return render(request, 'signup.html')
 
-def auth_user(request):#, user_json='{"email": "test@test.com", "password": "12345678"}'):
-    user_info = json.loads(request.body.decode, encoding='UTF-8')
-    user = authenticate(email=user_info["email"], password=user_info["password"])
-    if user is not None:
-        logout(request)
-        login(request, user)
-        print(user.email + " logged in")
-        return redirect("../"+str(request.user.id))
+def auth_user(request):
+    if request.method == 'POST':
+        user_info = json.loads(request.body.decode, encoding='UTF-8')
+        user = authenticate(email=user_info["email"], password=user_info["password"])
+        if user is not None:
+            logout(request)
+            login(request, user)
+            print(user.email + " logged in")
+            return redirect("../"+str(request.user.id))
+        else:
+            return HttpResponse('not ok')
     else:
-        return HttpResponse('not ok')
+        return HttpResponse(status=404)
 
 def create_user(request):
     if request.method == 'POST':
@@ -29,6 +32,8 @@ def create_user(request):
             return redirect("../" + str(request.user.id))
         else:
             return HttpResponse("not ok")
+    else:
+        return HttpResponse(status=404)
 
 def account_info(request, id=0):
     this_user = User.objects.get(id=id)

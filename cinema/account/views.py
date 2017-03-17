@@ -37,10 +37,7 @@ def auth_user(request):
         return HttpResponse('not POST')
 
 
-@csrf_protect
 def create_user(request):
-    c = {}
-    c.update(csrf(request))
     if request.method == 'POST':
         user_info = request.POST
         user_phone = int(user_info["phone"])

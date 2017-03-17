@@ -10,11 +10,8 @@ import json
 def login_view(request):
     return render(request, 'login.html')
 
-@csrf_protect
 def signup_view(request):
-    c = {}
-    c.update(csrf(request))
-    return render(request, 'signup.html', c)
+    return render(request, 'signup.html')
 
 def redirect_to_self(request):
     if request.user.is_authenticated():
@@ -24,7 +21,7 @@ def redirect_to_self(request):
 
 def auth_user(request):
     if request.method == 'POST':
-        user_info = json.loads(request.body.decode, encoding='UTF-8')
+        user_info = request.POST
         user = authenticate(email=user_info["email"], password=user_info["password"])
         if user is not None:
             logout(request)
@@ -37,17 +34,13 @@ def auth_user(request):
         return HttpResponse('not POST')
 
 
-
-@csrf_protect
 def create_user(request):
-    c = {}
-    c.update(csrf(request))
     if request.method == 'POST':
-        user_info = json.loads(request.body.decode, encoding='UTF-8')
+        user_info = request.POST
         user_phone = int(user_info["phone"])
         if user_phone is not None:
             user = User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
-            return redirect("../" + str(request.user.id))
+            return redirect("../../" + str(user.id))
         else:
             return HttpResponse("not ok")
     else:

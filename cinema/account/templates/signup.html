@@ -43,8 +43,7 @@
                 </div>
             </div>
             <div class="main-login main-center">
-                <form class="form-horizontal" method="post" action="/account/signup/attempt/">
-                    {% csrf_token %}
+                <form class="form-horizontal" method="post" action="/account/signup/attempt/">{% csrf_token %}
                     <div class="form-group">
                         <label for="name" class="cols-sm-2 control-label">Your Phone</label>
                         <div class="cols-sm-10">

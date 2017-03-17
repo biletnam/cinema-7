@@ -52,7 +52,7 @@
             <h3> Selected Seats (<span id="counter">0</span>):</h3>
             <ul id="selected-seats">
             </ul>
-            Total: <b>$<span id="total">0</span></b>
+            Total: <b><span id="total">0</span>₽</b>
             <p><input type="button" value="Buy tickets" class="custom-checkout-button" id="checkout"></p>
             <div id="legend"></div>
         </div>
@@ -98,6 +98,7 @@
     var firstSeatLabel = 1;
 
     $(document).ready(function () {
+        var seance_price = parseInt('{{ seance.price }}')
         var seats_list = '{{ result }}';
         strlist = '{"1":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "2":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"], "3":["True", "False", "True", "False", "False", "False", "False", "False", "False", "False"]}';
         console.log(seats_list);
@@ -127,7 +128,7 @@
                 map: hall_plan,
                 seats: {
                     e: {
-                        price: 40,
+                        price: seance_price,
                         classes: 'economy-class', //your custom CSS class
                         category: 'Economy Class'
                     }
@@ -149,7 +150,7 @@
                 click: function () {
                     if (this.status() == 'available') {
                         //let's create a new <li> which we'll add to the cart items
-                        $('<li>' + this.data().category + ' Seat # ' + this.settings.label + ': <b>$' + this.data().price + '</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                        $('<li>' + this.data().category + ' Seat # ' + this.settings.label + ': <b>' + this.data().price + '₽</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
                             .attr('id', 'cart-item-' + this.settings.id)
                             .data('seatId', this.settings.id)
                             .appendTo($cart);

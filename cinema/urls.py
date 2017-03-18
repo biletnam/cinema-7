@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^cinema/', include('cinema.info.urls')),
     url(r'^schedule/', include('cinema.schedule.urls')),
     url(r'^booking/', include('cinema.booking.urls')),
+    url(r'^account/', include('cinema.account.urls')),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]
 

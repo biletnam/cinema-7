@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.middleware.common import logger
 from django.shortcuts import render
 from cinema.booking.models import Booking
+from cinema.account.models import User
 from cinema.schedule.models import Seance, Row, Seat
 
 
@@ -31,12 +32,16 @@ def show(request, id=0):
 
 def show_booking_info(request, id=0):
     booking = Booking.objects.get(id=id)
-    seance = booking.seance
-    context = {
-        'booking': booking,
-        'seance': seance,
-    }
-    return render(request, 'booking/booking_info.html',context)
+
+    if User.objects.get(id=request.user.id) == booking.user:
+        seance = booking.seance
+        context = {
+            'booking': booking,
+            'seance': seance,
+        }
+        return render(request, 'booking/booking_info.html',context)
+    else:
+        return render(request, 'booking/forbidden.html',status=403)
 
 def create_booking(request):
     if request.is_ajax():
@@ -46,8 +51,9 @@ def create_booking(request):
             seance = Seance.objects.get(id=json_request.get("seance"))
             bookingList = json_request.get("selected")
             price = json_request.get("price")
+            user = User.objects.get(id=request.user.id)
             #creating new Booking instance
-            booking = Booking.objects.create(price=price, seance=seance, seats=bookingList)
+            booking = Booking.objects.create(price=price, seance=seance, seats=bookingList, user=user)
 
             #collecting response data - booking_id
             response_data = {}

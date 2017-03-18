@@ -35,7 +35,7 @@ def auth_user(request):
 def create_user(request):
     if request.method == 'POST':
         user_info = request.POST
-        user_phone = int(user_info["phone"])
+        user_phone = user_info["phone"]
         if user_phone is not None:
             user = User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
             return redirect("../../" + str(user.id))

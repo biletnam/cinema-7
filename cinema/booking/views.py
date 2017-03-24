@@ -66,7 +66,7 @@ def create_booking(request):
                 indices = seat.split("_")
                 row = Row.objects.filter(hall=hall, number = int(indices[0]))
                 number = int(indices[1])
-                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
+                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True, booking=booking)
 
             connection.close()
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))

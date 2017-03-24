@@ -1,6 +1,5 @@
 from django.db import models
 from cinema.schedule.models import Seance, Row, Hall, Seat
-from django.contrib.postgres import fields
 from django.conf import settings
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
@@ -9,7 +8,6 @@ from django.dispatch.dispatcher import receiver
 class Booking(models.Model):
     price = models.FloatField()
     seance = models.ForeignKey(Seance)
-    seats = fields.ArrayField(models.TextField(), max_length=10)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 
     def str_seats(self):

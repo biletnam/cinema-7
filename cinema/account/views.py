@@ -37,7 +37,7 @@ def logout_user(request):
         user_info = request.POST
         if request.user.is_authenticated():
             logout(request)
-    return(redirect("index"))
+    return(redirect("../../../"))
 
 def create_user(request):
     if request.method == 'POST':

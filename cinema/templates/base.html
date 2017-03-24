@@ -25,12 +25,22 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/login/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/account/signup/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Sign up</a>
-                    </li>
+                    {% if user.is_authenticated == True %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/logout/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Logout</a>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated == False %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/login/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Sign in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account/signup/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Sign up</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

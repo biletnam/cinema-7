@@ -1,66 +1,37 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-{% load ratings %}
-<!doctype html>
-<html>
-<head>
-    <title>All films</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" integrity="" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+{% block title %}Profile — Trigteam Cinema{% endblock %}
+{% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-light bg-faded">
-        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation"></button>
-        <div class="collapse navbar-toggleable-xs" id="navbar-header">
-          <a class="navbar-brand" href="/">Cinema</a>
-          <ul class="nav navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Catalog<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/schedule">Schedule</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/cinema">About</a>
-            </li>
-          </ul>
-            <ul class="nav navbar-nav float-xs-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i>User</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container" style="width: 500px;">
-        <div class="row main">
-            <h1>User info</h1>
-            <p>Username: {{ username }}</p>
-            <hr>
-            <table class="">
-                <tbody>
-                {% for obj in booking%}
-                    <tr>
-                        <th>
-                            <span>
-                                <div style="padding:0 2em 0 0">
-                                    <a href="#"> {{ obj.title }} </a>
-                                </div>
-                            </span>
-                        </th>
-                        <td>
-                            <a href="#" rel="#">{{ obj.time }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 500px;">
+    <div class="row main">
+        <h1>User info</h1>
+        <p>Username: {{ username }}</p>
+        <hr>
+        <table class="">
+            <tbody>
+            {% for obj in booking%}
+                <tr>
+                    <th>
+                        <span>
+                            <div style="padding:0 2em 0 0">
+                                <a href="#"> {{ obj.title }} </a>
+                            </div>
+                        </span>
+                    </th>
+                    <td>
+                        <a href="#" rel="#">{{ obj.time }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <script src='{% static 'js/jquery.min.js' %}', integrity='', crossorigin='anonymous'></script>
-    <script src='{% static 'js/tether.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
-    <script src='{% static 'js/bootstrap.min.js.css' %}', integrity='', crossorigin='anonymous'></script>
-</body>
-</html>
+</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

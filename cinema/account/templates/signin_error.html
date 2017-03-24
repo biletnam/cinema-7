@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %} Sign in error — Trigteam Cinema{% endblock %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 500px;">
+    <h1>Sign in error! Repeat again, <a href="account/login/">link</a></h1>
+</div>
+<script src='{% static 'js/jquery.min.js' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/tether.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+<script src='{% static 'js/bootstrap.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

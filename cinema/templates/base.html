@@ -26,12 +26,20 @@
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">
                     {% if user.is_authenticated == True %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Account</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/account/logout/"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Logout</a>
-                        </li>
+                        <form name="logout_form" id="logout_form" method="post" action="/account/logout/">{% csrf_token %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/account"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <input class="nav-link" style="border:none; background: none;" type="submit" value="Logout" id="perform_logout_button">
+                                <a href="#" style="display:none;" id="logout_link">Logout</a>
+                            </li>
+                        </form>
+                        <script type="text/javascript">
+                            $('#perform_logout_button').hide();
+                            $('#logout_link').click(function() {
+                                 document.logout_form.submit(); return false; }).show();
+                        </script>
                     {% endif %}
                     {% if user.is_authenticated == False %}
                         <li class="nav-item">

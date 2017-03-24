@@ -17,6 +17,10 @@ class Booking(models.Model):
             return_string += (str(seat.row) + "_" + str(seat.number) + ", ")
         return(return_string)
 
+    def get_seats(self):
+        booked_seats = Seat.objects.filter(booking=self)
+        return(booked_seats)
+
     def __str__(self):
         return("Booking: " + str(self.id) + " " + self.seance.movie.title + " " + self.str_seats())
 

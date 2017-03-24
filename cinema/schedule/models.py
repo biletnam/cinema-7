@@ -1,6 +1,6 @@
 from django.db import models
 from cinema.catalog.models import Movie
-from cinema.booking.models import Booking
+# from cinema.booking.models import Booking
 import datetime
 
 
@@ -63,7 +63,7 @@ class Seance(models.Model):
 class Seat(models.Model):
     hall = models.ForeignKey(Hall)
     row = models.ForeignKey(Row)
-    booking = models.ForeignKey(Booking, null=True)
+    booking = models.ForeignKey('booking.Booking', null=True)
     number = models.IntegerField(default=0)
     seance = models.ForeignKey(Seance)
     booked = models.BooleanField(default=False)

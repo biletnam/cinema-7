@@ -53,7 +53,7 @@ def create_booking(request):
             price = json_request.get("price")
             user = User.objects.get(id=request.user.id)
             #creating new Booking instance
-            booking = Booking.objects.create(price=price, seance=seance, seats=bookingList, user=user)
+            booking = Booking.objects.create(price=price, seance=seance, user=user)
 
             #collecting response data - booking_id
             response_data = {}

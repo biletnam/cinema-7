@@ -38,31 +38,36 @@
 </nav>
 <div style="margin:3em 5em">
     <div class="jumbotron" style="padding-bottom:2em;">
-        <h1 class="display-6">Выбранные места успешно забронированы!</h1>
-        <p class="lead">Номер вашей брони: {{ booking.id }}</p>
+        <h1 class="display-6">Инофрмация о Вашей брони</h1>
+        <p class="lead">Номер брони: {{ booking.id }}</p>
         <hr class="my-2">
         <p>Информация о сеансе:</p>
         <p class="lead">
         <p><b>Фильм</b> — {{ seance.movie.title }}</p>
         <p><b>Время сеанса</b> — {{ seance.start_time }}</p>
+        <p><b>Зал</b> — {{ seance.hall }}</p>
         <p><b>Ваши места</b>:
         <div id="seats"></div>
         </p>
         </p>
+        <p><b>Итоговая стоимость</b> - {{ booking.price }} </p>
     </div>
 </div>
 <script>
     function insertText(super_str) {
         document.getElementById('seats').innerHTML = super_str;
     }
-    var seats = "{{ booking.seats }}".replace(/&#39;/g, '"');
+    var seats = "{{ seats }}".replace(/&#39;/g, '"');
     var seats_array = JSON.parse(seats);
     super_str = "";
-    for (var seat in seats_array) {
-        cur_seat = seats_array[seat].split("_");
-        row = cur_seat[0];
-        col = cur_seat[1];
-        super_str += "Ваш ряд — " + row + " Ваше место — " + col + "<br>";
+
+    for (var i = 0; i < seats_array.length; i++) {
+
+        row = seats_array[i]["row"];
+        col = seats_array[i]["number"];
+        price = seats_array[i]["price"]
+
+        super_str += (i+1) +  ") Ряд — " + row + ", Место — " + col + ", Цена билета: " +  price + "<br>";
         insertText(super_str);
 
     }

@@ -2,7 +2,6 @@ from django.shortcuts import render, HttpResponse, redirect
 from cinema.account.models import User
 from cinema.booking.models import Booking
 from django.contrib.auth import authenticate, login, logout
-import json
 
 
 def login_view(request):
@@ -25,7 +24,6 @@ def auth_user(request):
         if user is not None:
             logout(request)
             login(request, user)
-            print(user.email + " logged in")
             return redirect("../../"+str(request.user.id))
         else:
             return HttpResponse('not ok')
@@ -34,7 +32,6 @@ def auth_user(request):
 
 def logout_user(request):
     if request.method == 'POST':
-        user_info = request.POST
         if request.user.is_authenticated():
             logout(request)
     return(redirect("../../../"))

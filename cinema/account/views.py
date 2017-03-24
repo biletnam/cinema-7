@@ -32,6 +32,13 @@ def auth_user(request):
     else:
         return HttpResponse('not POST')
 
+def logout_user(request):
+    if request.method == 'POST':
+        user_info = request.POST
+        if request.user.is_authenticated():
+            logout(request)
+    return(redirect("index"))
+
 def create_user(request):
     if request.method == 'POST':
         user_info = request.POST

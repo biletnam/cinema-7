@@ -22,7 +22,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('cinema.catalog.urls')),
+    url(r'^', include('cinema.catalog.urls'), name="index"),
     url(r'^movie/', include('cinema.movie_info.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^cinema/', include('cinema.info.urls')),

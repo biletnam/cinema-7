@@ -14,8 +14,9 @@ class Booking(models.Model):
 
     def str_seats(self):
         return_string = ""
-        for seat in self.seats:
-            return_string += (str(seat) + ", ")
+        booked_seats = Seat.objects.filter(booking=self)
+        for seat in booked_seats:
+            return_string += (str(seat.row) + "_" + str(seat.number) + ", ")
         return(return_string)
 
     def __str__(self):
@@ -27,13 +28,8 @@ class Booking(models.Model):
     def get_movie(self):
         return self.seance.movie
 
-
 @receiver(pre_delete, sender=Booking)
-def booking_delete(sender, instance, **kwargs):
-    seance = instance.seance
-    hall = seance.hall
-    for seat in instance.seats:
-        indices = seat.split("_")
-        row = Row.objects.filter(hall=hall, number=int(indices[0]))
-        number = int(indices[1])
-        Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=False)
+def booking_new_delete(sender, instance, **kwargs):
+    queryset = Seat.objects.filter(booking=sender)
+    for seat in queryset:
+        seat.set_null_booking()

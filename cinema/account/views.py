@@ -23,11 +23,11 @@ def auth_user(request):
         if user is not None:
             logout(request)
             login(request, user)
-            return redirect("../../"+str(request.user.id))
+            return redirect("to-self")
         else:
-            return HttpResponse('not ok')
+            return redirect("su_error")
     else:
-        return HttpResponse('not POST')
+        return HttpResponse("not POST")
 
 def logout_user(request):
     if request.method == 'POST':
@@ -45,7 +45,7 @@ def create_user(request):
             login(request, user)
             return redirect("to-self")
         else:
-            return HttpResponse("not ok")
+            return redirect()
     else:
         return HttpResponse('not POST')
 
@@ -73,3 +73,9 @@ def account_info(request, id=0):
             return redirect("to-self")
     else:
         return redirect("login-url")
+
+def signup_error(request):
+    return(render(request, "signup_error.html"))
+
+def signin_error(request):
+    return(render(request, "signin_error.html"))

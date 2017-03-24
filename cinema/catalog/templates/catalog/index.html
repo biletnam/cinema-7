@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block title %}Trigteam Cinema — St.Petersburg{% endblock %}
-{% block style %}<link rel="stylesheet" type="text/css" href="{% static '../static/catalog/style.css' %}"/>{% endblock %}
+{% block style %}<link rel="stylesheet" href="{% static '../static/catalog/style.css' %}"/>{% endblock %}
 {% block content %}
 <div class="container">
     {% if movie_list %}

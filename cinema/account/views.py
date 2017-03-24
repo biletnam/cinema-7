@@ -60,6 +60,7 @@ def account_info(request, id=0):
                 booking["id"] = entity.id
                 booking["title"] = entity.seance.movie.title
                 booking["time"] = entity.seance.start_time
+                booking["movie"] = entity.seance.movie.id
                 bookings.append(booking)
             response["booking"] = bookings
             return render(request, "account_info.html", context=response)

@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 def login_view(request):
     return render(request, 'login.html')
 
-
 def signup_view(request):
     return render(request, 'signup.html')
 
@@ -41,8 +40,10 @@ def create_user(request):
         user_info = request.POST
         user_phone = user_info["phone"]
         if user_phone is not None:
-            user = User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
-            return redirect("../../" + str(user.id))
+            User.objects.create_user(email=user_info["email"], password=user_info["password"], phone=user_phone)
+            user = authenticate(email=user_info["email"], password=user_info["password"])
+            login(request, user)
+            return redirect("to-self")
         else:
             return HttpResponse("not ok")
     else:

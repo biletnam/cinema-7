@@ -35,11 +35,23 @@ def show_booking_info(request, id=0):
 
     if User.objects.get(id=request.user.id) == booking.user:
         seance = booking.seance
-        context = {
+        seats = booking.get_seats()
+        seats_dict = []
+
+        for entity in seats:
+            obj = {}
+            obj["row"] = entity.row.number
+            obj["number"] = entity.number
+            obj["price"] = entity.price
+            seats_dict.append(obj)
+
+        response  = {
             'booking': booking,
             'seance': seance,
+            'seats': seats_dict,
         }
-        return render(request, 'booking/booking_info.html',context)
+
+        return render(request, 'booking/booking_info.html', context=response)
     else:
         return render(request, 'booking/forbidden.html',status=403)
 
@@ -53,7 +65,7 @@ def create_booking(request):
             price = json_request.get("price")
             user = User.objects.get(id=request.user.id)
             #creating new Booking instance
-            booking = Booking.objects.create(price=price, seance=seance, seats=bookingList, user=user)
+            booking = Booking.objects.create(price=price, seance=seance, user=user)
 
             #collecting response data - booking_id
             response_data = {}
@@ -66,7 +78,7 @@ def create_booking(request):
                 indices = seat.split("_")
                 row = Row.objects.filter(hall=hall, number = int(indices[0]))
                 number = int(indices[1])
-                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True)
+                Seat.objects.filter(seance=seance, hall=hall, row=row, number=number).update(booked=True, booking=booking)
 
             connection.close()
             return (HttpResponse(json.dumps(response_data), content_type = "application/json", status=200))

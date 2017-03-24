@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block title %}Permission denied — Trigteam Cinema{% endblock %}
+{% block title %} Sign up error — Trigteam Cinema{% endblock %}
 {% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'movie_info/movie_info.css' %}" />
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
@@ -8,9 +8,7 @@
 {% endblock %}
 {% block content %}
 <div class="container" style="width: 500px;">
-    <div class="row main">
-        <h1>Permission denied</h1>
-    </div>
+    <h1>Registration error! Repeat again, <a href="../../signup/">link</a></h1>
 </div>
 <script src='{% static 'js/jquery.min.js' %}' , integrity='' , crossorigin='anonymous'></script>
 <script src='{% static 'js/tether.min.js.css' %}' , integrity='' , crossorigin='anonymous'></script>

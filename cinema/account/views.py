@@ -25,7 +25,7 @@ def auth_user(request):
             login(request, user)
             return redirect("to-self")
         else:
-            return redirect("su_error")
+            return redirect("si_error")
     else:
         return HttpResponse("not POST")
 
@@ -45,7 +45,7 @@ def create_user(request):
             login(request, user)
             return redirect("to-self")
         else:
-            return redirect()
+            return redirect('su_error')
     else:
         return HttpResponse('not POST')
 
